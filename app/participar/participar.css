@@ -1,6 +1,7 @@
 /* =========================================================
    PROJETO AGATHA PINHEIRO
    FORMULÁRIO DE PARTICIPAÇÃO
+   VISUAL PREMIUM — BLACK / GOLD / WHITE
    ========================================================= */
 
 .form-page {
@@ -21,18 +22,20 @@
 }
 
 /* =========================================================
-   HEADER DO FORMULÁRIO
+   HEADER
    ========================================================= */
 
 .form-header {
   width: 100%;
   padding: 28px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(8, 8, 8, 0.9);
 }
 
 .form-header-inner {
   width: min(1180px, calc(100% - 48px));
   margin: 0 auto;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -43,35 +46,61 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
+
   color: rgba(255, 255, 255, 0.65);
   text-decoration: none;
+
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  transition: color 0.25s ease;
+
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
 }
 
 .form-back:hover {
   color: #d4af37;
+  transform: translateX(-3px);
 }
 
 .form-logo {
   display: flex;
   align-items: center;
   gap: 12px;
+
+  color: inherit;
+  text-decoration: none;
 }
 
 .form-logo-mark {
   width: 42px;
   height: 42px;
+
   border: 1px solid rgba(212, 175, 55, 0.7);
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   color: #d4af37;
+
   font-family: "Playfair Display", Georgia, serif;
   font-size: 16px;
+
+  box-shadow:
+    0 0 20px rgba(212, 175, 55, 0.05);
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.form-logo:hover .form-logo-mark {
+  border-color: #d4af37;
+  box-shadow:
+    0 0 25px rgba(212, 175, 55, 0.12);
 }
 
 .form-logo-text {
@@ -88,6 +117,7 @@
 
 .form-logo-subtitle {
   color: rgba(255, 255, 255, 0.4);
+
   font-size: 8px;
   letter-spacing: 0.18em;
 }
@@ -99,9 +129,14 @@
 .form-intro {
   width: min(1180px, calc(100% - 48px));
   margin: 0 auto;
+
   padding: 105px 0 85px;
+
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+  grid-template-columns:
+    minmax(0, 1.25fr)
+    minmax(300px, 0.75fr);
+
   gap: 90px;
   align-items: end;
 }
@@ -111,20 +146,42 @@
 }
 
 .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
   margin-bottom: 22px;
+
   color: #d4af37;
+
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
 }
 
+.eyebrow-dot {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+  background: #d4af37;
+
+  box-shadow:
+    0 0 12px rgba(212, 175, 55, 0.8);
+
+  animation: pulseGold 2s ease-in-out infinite;
+}
+
 .form-intro h1 {
   margin: 0;
+
   font-family: "Playfair Display", Georgia, serif;
+
   font-size: clamp(52px, 7vw, 92px);
   font-weight: 400;
   line-height: 0.96;
+
   letter-spacing: -0.045em;
 }
 
@@ -134,22 +191,34 @@
 
 .form-intro-text {
   max-width: 620px;
+
   margin-top: 30px;
+
   color: rgba(255, 255, 255, 0.62);
+
   font-size: 16px;
   line-height: 1.8;
 }
 
+.form-intro-text strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+
 .form-intro-side {
   border-left: 1px solid rgba(212, 175, 55, 0.45);
+
   padding-left: 28px;
   padding-bottom: 5px;
 }
 
-.form-intro-side span {
+.form-intro-side > span {
   display: block;
+
   margin-bottom: 12px;
+
   color: #d4af37;
+
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.18em;
@@ -157,54 +226,131 @@
 
 .form-intro-side p {
   margin: 0;
+
   color: rgba(255, 255, 255, 0.48);
+
   font-size: 13px;
   line-height: 1.8;
 }
 
 /* =========================================================
-   BOTÃO COMEÇAR / CTA
+   DESTAQUE GRATUITO
    ========================================================= */
 
 .form-start {
   width: min(1180px, calc(100% - 48px));
   margin: 0 auto;
+
   padding-bottom: 70px;
 }
 
+.form-start {
+  display: flex;
+  align-items: center;
+}
+
+.form-start > span {
+  width: 48px;
+  height: 48px;
+
+  margin-right: 16px;
+
+  border: 1px solid rgba(212, 175, 55, 0.45);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #d4af37;
+
+  font-size: 16px;
+
+  background: rgba(212, 175, 55, 0.035);
+}
+
+.form-start strong {
+  display: block;
+
+  color: #d4af37;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.form-start small {
+  display: block;
+
+  margin-top: 7px;
+
+  color: rgba(255, 255, 255, 0.4);
+
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   BOTÕES
+   ========================================================= */
+
 .btn {
   min-height: 54px;
+
   padding: 0 28px;
+
   border: 1px solid transparent;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
+
   text-decoration: none;
+
   font-family: inherit;
+
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+
   cursor: pointer;
+
   transition:
     transform 0.25s ease,
     background 0.25s ease,
     border-color 0.25s ease,
-    color 0.25s ease;
+    color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .btn:hover {
   transform: translateY(-2px);
 }
 
+.btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+  transform: none;
+}
+
 .btn-gold {
   background: #d4af37;
   color: #080808;
+
+  box-shadow:
+    0 10px 35px rgba(212, 175, 55, 0.12);
 }
 
 .btn-gold:hover {
   background: #e4c45a;
+
+  box-shadow:
+    0 14px 40px rgba(212, 175, 55, 0.2);
+}
+
+.btn span {
+  font-size: 15px;
 }
 
 /* =========================================================
@@ -214,6 +360,7 @@
 .application-form {
   width: min(1180px, calc(100% - 48px));
   margin: 0 auto;
+
   padding-bottom: 120px;
 }
 
@@ -223,28 +370,74 @@
 
 .form-section {
   position: relative;
+
   margin-bottom: 34px;
   padding: 52px;
+
   border: 1px solid rgba(255, 255, 255, 0.09);
+
   background:
     linear-gradient(
       145deg,
       rgba(255, 255, 255, 0.035),
       rgba(255, 255, 255, 0.012)
     );
+
+  overflow: hidden;
+
+  transition:
+    border-color 0.35s ease,
+    background 0.35s ease,
+    transform 0.35s ease;
 }
 
 .form-section::before {
   content: "";
+
   position: absolute;
+
   top: -1px;
   left: -1px;
+
   width: 80px;
   height: 1px;
+
   background: #d4af37;
 }
 
+.form-section::after {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  right: 0;
+
+  width: 180px;
+  height: 180px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(212, 175, 55, 0.045),
+      transparent 70%
+    );
+
+  pointer-events: none;
+}
+
+.form-section:hover {
+  border-color: rgba(212, 175, 55, 0.16);
+}
+
+/* =========================================================
+   CABEÇALHO DA SEÇÃO
+   ========================================================= */
+
 .section-heading {
+  position: relative;
+  z-index: 1;
+
   margin-bottom: 42px;
 }
 
@@ -252,28 +445,48 @@
   display: flex;
   align-items: center;
   gap: 14px;
+
   margin-bottom: 14px;
 }
 
 .section-number {
   color: #d4af37;
+
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.14em;
 }
 
+.section-label {
+  color: #d4af37;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+
+  text-transform: uppercase;
+}
+
 .section-heading h2 {
   margin: 0;
+
   font-family: "Playfair Display", Georgia, serif;
+
   font-size: clamp(28px, 3vw, 42px);
   font-weight: 400;
+
   line-height: 1.1;
+
+  letter-spacing: -0.025em;
 }
 
 .section-heading p {
   max-width: 650px;
+
   margin: 14px 0 0;
+
   color: rgba(255, 255, 255, 0.45);
+
   font-size: 13px;
   line-height: 1.7;
 }
@@ -283,13 +496,20 @@
    ========================================================= */
 
 .form-grid {
+  position: relative;
+  z-index: 1;
+
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
   gap: 28px 24px;
 }
 
 .form-grid.three {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
 }
 
 .form-grid.full {
@@ -301,6 +521,9 @@
    ========================================================= */
 
 .field {
+  position: relative;
+  z-index: 1;
+
   display: flex;
   flex-direction: column;
   gap: 9px;
@@ -312,14 +535,17 @@
 
 .field label {
   color: rgba(255, 255, 255, 0.78);
+
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.13em;
+
   text-transform: uppercase;
 }
 
 .field label span {
   color: #d4af37;
+
   margin-left: 3px;
 }
 
@@ -328,29 +554,40 @@
 .field select {
   width: 100%;
   box-sizing: border-box;
+
   border: 1px solid rgba(255, 255, 255, 0.13);
   border-radius: 0;
+
   outline: none;
+
   background: rgba(255, 255, 255, 0.035);
+
   color: #ffffff;
+
   font-family: inherit;
   font-size: 14px;
+
   transition:
     border-color 0.25s ease,
     background 0.25s ease,
-    box-shadow 0.25s ease;
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
 }
 
 .field input,
 .field select {
   min-height: 52px;
+
   padding: 0 16px;
 }
 
 .field textarea {
   min-height: 125px;
+
   padding: 15px 16px;
+
   resize: vertical;
+
   line-height: 1.6;
 }
 
@@ -361,35 +598,70 @@
 
 .field select {
   appearance: none;
+
   cursor: pointer;
+
+  background-image:
+    linear-gradient(45deg, transparent 50%, #d4af37 50%),
+    linear-gradient(135deg, #d4af37 50%, transparent 50%);
+
+  background-position:
+    calc(100% - 19px) 22px,
+    calc(100% - 14px) 22px;
+
+  background-size:
+    5px 5px,
+    5px 5px;
+
+  background-repeat: no-repeat;
+}
+
+.field select option {
+  background: #101010;
+  color: #ffffff;
+}
+
+.field input:hover,
+.field textarea:hover,
+.field select:hover {
+  border-color: rgba(255, 255, 255, 0.23);
 }
 
 .field input:focus,
 .field textarea:focus,
 .field select:focus {
   border-color: rgba(212, 175, 55, 0.75);
+
   background: rgba(212, 175, 55, 0.035);
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.06);
+
+  box-shadow:
+    0 0 0 3px rgba(212, 175, 55, 0.06),
+    0 8px 30px rgba(0, 0, 0, 0.12);
 }
 
 .field small {
   color: rgba(255, 255, 255, 0.3);
+
   font-size: 10px;
   line-height: 1.5;
 }
 
 /* =========================================================
-   ESCOLHAS / RADIO / CHECKBOX
+   RADIO / CHOICE
    ========================================================= */
 
 .choice-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
   gap: 10px;
 }
 
 .choice-grid.three {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
 }
 
 .choice {
@@ -398,23 +670,34 @@
 
 .choice input {
   position: absolute;
+
   width: 1px;
   height: 1px;
+
   opacity: 0;
+
   pointer-events: none;
 }
 
 .choice label {
   min-height: 52px;
+
   padding: 14px 16px;
+
   border: 1px solid rgba(255, 255, 255, 0.1);
+
   background: rgba(255, 255, 255, 0.025);
+
   display: flex;
   align-items: center;
+
   color: rgba(255, 255, 255, 0.65);
+
   font-size: 12px;
   line-height: 1.4;
+
   cursor: pointer;
+
   transition:
     border-color 0.25s ease,
     background 0.25s ease,
@@ -428,75 +711,152 @@
 
 .choice input:checked + label {
   border-color: #d4af37;
+
   background: rgba(212, 175, 55, 0.09);
+
   color: #ffffff;
 }
 
 .choice input:checked + label::before {
   content: "✓";
+
   margin-right: 9px;
+
   color: #d4af37;
+
   font-weight: 700;
 }
 
 /* =========================================================
    CHECKBOXES
+   IMPORTANTE:
+   O NOVO PAGE.TSX USA:
+   <label className="checkbox-item">
+      <input />
+      <span />
+   </label>
    ========================================================= */
 
 .checkbox-grid {
+  position: relative;
+  z-index: 1;
+
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
   gap: 10px;
 }
 
 .checkbox-item {
   position: relative;
+
+  min-height: 52px;
+
+  padding: 12px 15px;
+
+  box-sizing: border-box;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  background: rgba(255, 255, 255, 0.025);
+
+  display: flex;
+  align-items: center;
+
+  color: rgba(255, 255, 255, 0.6);
+
+  font-size: 11px;
+  line-height: 1.4;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.checkbox-item:hover {
+  border-color: rgba(212, 175, 55, 0.45);
+
+  color: #ffffff;
+
+  transform: translateY(-1px);
 }
 
 .checkbox-item input {
   position: absolute;
+
   width: 1px;
   height: 1px;
+
   opacity: 0;
+
+  pointer-events: none;
 }
 
-.checkbox-item label {
-  min-height: 48px;
-  padding: 12px 14px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+.checkbox-item span {
   display: flex;
   align-items: center;
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 11px;
-  line-height: 1.4;
-  cursor: pointer;
+
+  width: 100%;
+}
+
+.checkbox-item span::before {
+  content: "";
+
+  flex: 0 0 auto;
+
+  width: 17px;
+  height: 17px;
+
+  margin-right: 10px;
+
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  color: transparent;
+
   transition:
     border-color 0.25s ease,
     background 0.25s ease,
     color 0.25s ease;
 }
 
-.checkbox-item label:hover {
-  border-color: rgba(212, 175, 55, 0.4);
-}
-
-.checkbox-item input:checked + label {
+.checkbox-item.selected {
   border-color: #d4af37;
-  background: rgba(212, 175, 55, 0.08);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(212, 175, 55, 0.1),
+      rgba(212, 175, 55, 0.035)
+    );
+
   color: #ffffff;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(212, 175, 55, 0.03);
 }
 
-.checkbox-item input:checked + label::before {
+.checkbox-item.selected span::before {
   content: "✓";
-  width: 17px;
-  height: 17px;
-  margin-right: 9px;
-  border: 1px solid #d4af37;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+
+  border-color: #d4af37;
+
+  background: rgba(212, 175, 55, 0.08);
+
   color: #d4af37;
-  font-size: 9px;
+
+  font-size: 10px;
+  font-weight: 700;
 }
 
 /* =========================================================
@@ -504,25 +864,52 @@
    ========================================================= */
 
 .final-notice {
+  position: relative;
+  z-index: 1;
+
   margin-top: 38px;
+
   padding: 24px;
+
   border-left: 2px solid #d4af37;
-  background: rgba(212, 175, 55, 0.045);
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(212, 175, 55, 0.055),
+      rgba(212, 175, 55, 0.015)
+    );
+}
+
+.final-notice > span {
+  display: block;
+
+  margin-bottom: 10px;
+
+  color: #d4af37;
+
+  font-size: 15px;
 }
 
 .final-notice strong {
   display: block;
+
   margin-bottom: 8px;
+
   color: #d4af37;
+
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.15em;
+
   text-transform: uppercase;
 }
 
 .final-notice p {
   margin: 0;
+
   color: rgba(255, 255, 255, 0.48);
+
   font-size: 12px;
   line-height: 1.7;
 }
@@ -533,19 +920,41 @@
 
 .form-navigation {
   margin-top: 45px;
+
   padding-top: 35px;
+
   border-top: 1px solid rgba(255, 255, 255, 0.08);
+
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   gap: 20px;
 }
 
 .form-navigation-info {
   max-width: 450px;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
   color: rgba(255, 255, 255, 0.35);
+
   font-size: 10px;
   line-height: 1.6;
+}
+
+.form-navigation-info > span {
+  color: #d4af37;
+
+  flex: 0 0 auto;
+
+  font-size: 13px;
+}
+
+.form-navigation-info p {
+  margin: 0;
 }
 
 .form-navigation button {
@@ -553,15 +962,20 @@
 }
 
 /* =========================================================
-   MENSAGEM DE SUCESSO
+   SUCESSO
    ========================================================= */
 
 .form-success {
   width: min(760px, calc(100% - 48px));
+
   margin: 80px auto 140px;
+
   padding: 70px 50px;
+
   border: 1px solid rgba(212, 175, 55, 0.3);
+
   text-align: center;
+
   background:
     radial-gradient(
       circle at center,
@@ -569,33 +983,65 @@
       transparent 60%
     ),
     rgba(255, 255, 255, 0.02);
+
+  box-shadow:
+    0 30px 100px rgba(0, 0, 0, 0.25);
 }
 
 .form-success-symbol {
   width: 64px;
   height: 64px;
+
   margin: 0 auto 28px;
+
   border: 1px solid #d4af37;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   color: #d4af37;
+
   font-size: 20px;
+
+  animation:
+    successGlow 2.5s ease-in-out infinite;
+}
+
+.form-success h1 {
+  margin: 0 0 18px;
+
+  font-family: "Playfair Display", Georgia, serif;
+
+  font-size: clamp(40px, 6vw, 64px);
+  font-weight: 400;
+
+  line-height: 1;
+  letter-spacing: -0.04em;
 }
 
 .form-success h2 {
   margin: 0 0 18px;
+
   font-family: "Playfair Display", Georgia, serif;
+
   font-size: 42px;
   font-weight: 400;
 }
 
 .form-success p {
   max-width: 520px;
-  margin: 0 auto 30px;
+
+  margin: 0 auto 20px;
+
   color: rgba(255, 255, 255, 0.55);
+
   font-size: 14px;
   line-height: 1.8;
+}
+
+.form-success p strong {
+  color: #ffffff;
 }
 
 /* =========================================================
@@ -604,39 +1050,109 @@
 
 .form-footer {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
+
   padding: 35px 0;
 }
 
 .form-footer-inner {
   width: min(1180px, calc(100% - 48px));
+
   margin: 0 auto;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   gap: 20px;
 }
 
 .form-footer-copy {
   color: rgba(255, 255, 255, 0.3);
+
   font-size: 9px;
   letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+}
+
+.form-footer-project {
+  margin-top: 6px;
+
+  color: rgba(212, 175, 55, 0.55);
+
+  font-size: 8px;
+  letter-spacing: 0.15em;
+
   text-transform: uppercase;
 }
 
 .form-footer-mark {
   color: #d4af37;
+
   font-family: "Playfair Display", Georgia, serif;
+
   font-size: 20px;
 }
 
 /* =========================================================
-   RESPONSIVO — TABLET
+   ANIMAÇÕES
+   ========================================================= */
+
+@keyframes pulseGold {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.9);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes successGlow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 rgba(212, 175, 55, 0);
+  }
+
+  50% {
+    box-shadow:
+      0 0 30px rgba(212, 175, 55, 0.18);
+  }
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1050px) {
+  .form-intro {
+    gap: 55px;
+  }
+
+  .form-section {
+    padding: 42px;
+  }
+
+  .checkbox-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* =========================================================
+   TABLET PEQUENO
    ========================================================= */
 
 @media (max-width: 900px) {
   .form-intro {
     grid-template-columns: 1fr;
+
     gap: 45px;
+
     padding-top: 75px;
   }
 
@@ -645,16 +1161,18 @@
   }
 
   .form-grid.three {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
   }
 
   .checkbox-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
   }
 }
 
 /* =========================================================
-   RESPONSIVO — CELULAR
+   CELULAR
    ========================================================= */
 
 @media (max-width: 640px) {
@@ -678,6 +1196,7 @@
   .form-logo-mark {
     width: 34px;
     height: 34px;
+
     font-size: 13px;
   }
 
@@ -691,7 +1210,9 @@
 
   .form-intro {
     width: min(100% - 32px, 1180px);
+
     padding: 60px 0 45px;
+
     gap: 35px;
   }
 
@@ -701,6 +1222,7 @@
 
   .form-intro-text {
     margin-top: 24px;
+
     font-size: 14px;
     line-height: 1.7;
   }
@@ -711,16 +1233,34 @@
 
   .form-start {
     width: min(100% - 32px, 1180px);
+
     padding-bottom: 45px;
+  }
+
+  .form-start > span {
+    width: 42px;
+    height: 42px;
+
+    margin-right: 12px;
+  }
+
+  .form-start strong {
+    font-size: 9px;
+  }
+
+  .form-start small {
+    font-size: 9px;
   }
 
   .application-form {
     width: min(100% - 32px, 1180px);
+
     padding-bottom: 70px;
   }
 
   .form-section {
     margin-bottom: 20px;
+
     padding: 30px 20px;
   }
 
@@ -730,6 +1270,10 @@
 
   .section-heading h2 {
     font-size: 30px;
+  }
+
+  .section-heading p {
+    font-size: 12px;
   }
 
   .form-grid,
@@ -747,23 +1291,34 @@
   .field input,
   .field select {
     min-height: 50px;
+
+    font-size: 13px;
   }
 
   .field textarea {
     min-height: 115px;
+
+    font-size: 13px;
+  }
+
+  .checkbox-item {
+    min-height: 50px;
+
+    padding: 12px 13px;
   }
 
   .choice label {
     min-height: 50px;
   }
 
-  .checkbox-item label {
-    min-height: 48px;
-  }
-
   .form-navigation {
     flex-direction: column;
+
     align-items: stretch;
+  }
+
+  .form-navigation-info {
+    max-width: none;
   }
 
   .form-navigation .btn {
@@ -772,8 +1327,14 @@
 
   .form-success {
     width: min(100% - 32px, 760px);
+
     margin: 50px auto 80px;
+
     padding: 50px 25px;
+  }
+
+  .form-success h1 {
+    font-size: 44px;
   }
 
   .form-success h2 {
@@ -786,17 +1347,58 @@
 }
 
 /* =========================================================
-   ACESSIBILIDADE / REDUÇÃO DE MOVIMENTO
+   CELULAR PEQUENO
+   ========================================================= */
+
+@media (max-width: 380px) {
+  .form-header-inner {
+    gap: 15px;
+  }
+
+  .form-logo-name {
+    font-size: 8px;
+  }
+
+  .form-logo-subtitle {
+    font-size: 6px;
+  }
+
+  .form-back {
+    font-size: 8px;
+  }
+
+  .form-intro h1 {
+    font-size: 43px;
+  }
+
+  .form-section {
+    padding: 25px 16px;
+  }
+
+  .section-heading h2 {
+    font-size: 27px;
+  }
+
+  .form-success {
+    padding: 40px 18px;
+  }
+
+  .form-success h1 {
+    font-size: 38px;
+  }
+}
+
+/* =========================================================
+   ACESSIBILIDADE
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-  .btn,
-  .form-back,
-  .field input,
-  .field textarea,
-  .field select,
-  .choice label,
-  .checkbox-item label {
-    transition: none;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
