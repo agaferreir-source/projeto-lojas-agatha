@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-
+import "./participar.css";
 const WHATSAPP_NUMBER = "5521987103449";
 
 type FormData = {
