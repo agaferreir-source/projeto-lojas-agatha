@@ -15,36 +15,36 @@ const benefits = [
   },
   {
     number: "03",
-    title: "PROJETO REAL",
+    title: "UM PROJETO REAL",
     description:
-      "Sua empresa poderá fazer parte de um projeto digital desenvolvido profissionalmente.",
+      "Sua empresa poderá fazer parte de um projeto digital desenvolvido para resolver uma necessidade real.",
   },
 ];
 
-const services = [
+const solutions = [
   {
     number: "01",
     title: "SITE",
     description:
-      "Uma presença digital profissional para apresentar sua empresa, serviços e produtos.",
+      "Uma presença digital profissional para apresentar sua empresa, produtos e serviços.",
   },
   {
     number: "02",
     title: "SISTEMA",
     description:
-      "Uma ferramenta personalizada para organizar e facilitar processos da empresa.",
+      "Uma ferramenta personalizada para organizar processos e facilitar a rotina do negócio.",
   },
   {
     number: "03",
     title: "AUTOMAÇÃO",
     description:
-      "Processos repetitivos podem ser transformados em fluxos mais rápidos e inteligentes.",
+      "Processos repetitivos podem se transformar em fluxos mais rápidos e inteligentes.",
   },
   {
     number: "04",
     title: "GESTÃO",
     description:
-      "Soluções para ajudar no controle de clientes, vendas, estoque e informações.",
+      "Soluções para ajudar no controle de clientes, vendas, estoque, financeiro e informações.",
   },
 ];
 
@@ -53,25 +53,25 @@ const steps = [
     number: "01",
     title: "VOCÊ SE INSCREVE",
     description:
-      "Conte sobre sua empresa, seus desafios e a solução que gostaria de desenvolver.",
+      "Conte sobre sua empresa, seus desafios e o que gostaria de transformar através da tecnologia.",
   },
   {
     number: "02",
     title: "EU ANALISO",
     description:
-      "As inscrições serão avaliadas considerando a proposta e a possibilidade de desenvolvimento.",
+      "As inscrições serão analisadas considerando a necessidade, a proposta e a possibilidade de desenvolvimento.",
   },
   {
     number: "03",
-    title: "SEU NEGÓCIO É SELECIONADO",
+    title: "A EMPRESA É SELECIONADA",
     description:
-      "Caso exista alinhamento, entrarei em contato para conversarmos sobre o projeto.",
+      "Caso exista alinhamento, entrarei em contato para entender melhor o projeto.",
   },
   {
     number: "04",
-    title: "O PROJETO GANHA VIDA",
+    title: "O PROJETO COMEÇA",
     description:
-      "Depois do alinhamento, começamos o desenvolvimento da solução.",
+      "Depois do alinhamento, começamos a transformar a necessidade em uma solução digital real.",
   },
 ];
 
@@ -85,20 +85,12 @@ export default function Home() {
             <div className="logo-mark">AP</div>
 
             <div className="logo-text">
-              <span className="logo-name">
-                AGATHA PINHEIRO
-              </span>
-
-              <span className="logo-subtitle">
-                DIGITAL SOLUTIONS
-              </span>
+              <span className="logo-name">AGATHA PINHEIRO</span>
+              <span className="logo-subtitle">DIGITAL SOLUTIONS</span>
             </div>
           </Link>
 
-          <Link
-            href="/participar"
-            className="header-cta"
-          >
+          <Link href="/participar" className="header-cta">
             Quero participar
           </Link>
         </div>
@@ -109,37 +101,26 @@ export default function Home() {
         <div className="container hero-content">
           <div className="hero-grid">
             <div className="hero-copy">
-              <div className="eyebrow">
-                UMA NOVA EXPERIÊNCIA DIGITAL
-              </div>
+              <div className="eyebrow">OPEN PROJECT · 2026</div>
 
               <h1 className="hero-title">
-                Estou procurando
+                Seu negócio tem
                 <br />
-                <span>
-                  lojas para um novo projeto.
-                </span>
+                <span>um problema para resolver?</span>
               </h1>
 
               <p className="hero-text">
-                Quero selecionar alguns negócios para
-                desenvolver uma solução digital real,
-                personalizada e pensada para as
-                necessidades de cada empresa.
+                Estou selecionando negócios reais para desenvolver uma solução
+                digital personalizada, pensada a partir das necessidades de
+                cada empresa.
               </p>
 
               <div className="hero-actions">
-                <Link
-                  href="/participar"
-                  className="button-primary"
-                >
+                <Link href="/participar" className="button-primary">
                   Quero participar
                 </Link>
 
-                <a
-                  href="#projeto"
-                  className="button-secondary"
-                >
+                <a href="#projeto" className="button-secondary">
                   Conhecer o projeto
                 </a>
               </div>
@@ -148,8 +129,7 @@ export default function Home() {
                 <span>✦</span>
 
                 <p>
-                  Desenvolvimento sem custo para os
-                  negócios selecionados.
+                  Desenvolvimento sem custo para os negócios selecionados.
                 </p>
               </div>
             </div>
@@ -166,16 +146,12 @@ export default function Home() {
                 </div>
 
                 <div className="campaign-card-center">
-                  <div className="campaign-small">
-                    PROJETO
-                  </div>
+                  <div className="campaign-small">PROJETO</div>
 
-                  <div className="campaign-number">
-                    01
-                  </div>
+                  <div className="campaign-number">01</div>
 
                   <div className="campaign-main">
-                    YOUR
+                    REAL
                     <br />
                     BUSINESS
                   </div>
@@ -188,7 +164,7 @@ export default function Home() {
                 </div>
 
                 <div className="campaign-card-bottom">
-                  <span>REAL BUSINESS</span>
+                  <span>REAL NEED</span>
                   <span>REAL PROJECT</span>
                 </div>
               </div>
@@ -200,7 +176,7 @@ export default function Home() {
 
               <div className="floating-tag tag-two">
                 <span>✦</span>
-                PROJETO PERSONALIZADO
+                SOLUÇÃO PERSONALIZADA
               </div>
             </div>
           </div>
@@ -208,43 +184,36 @@ export default function Home() {
       </section>
 
       {/* O PROJETO */}
-      <section
-        className="section section-dark"
-        id="projeto"
-      >
+      <section className="section section-dark" id="projeto">
         <div className="container">
           <div className="split-section">
             <div className="section-heading">
-              <div className="section-label">
-                O PROJETO
-              </div>
+              <div className="section-label">O PROJETO</div>
 
               <h2 className="section-title">
-                Quero transformar
+                Tecnologia criada
                 <br />
-                negócios reais
+                para problemas
                 <br />
-                através da tecnologia.
+                reais.
               </h2>
             </div>
 
             <div className="split-text">
               <p>
-                Estou criando uma iniciativa para
-                desenvolver projetos digitais em negócios
-                reais.
+                Estou criando uma iniciativa para desenvolver projetos
+                digitais em negócios reais.
               </p>
 
               <p>
-                A ideia é encontrar empresas que tenham
-                uma necessidade, um problema ou uma ideia
-                que possa ser transformada em uma solução
-                através da tecnologia.
+                A ideia é encontrar empresas que tenham uma necessidade, um
+                problema ou uma ideia que possa ser transformada em uma
+                solução através da tecnologia.
               </p>
 
               <p>
-                Alguns negócios serão selecionados para
-                participar do desenvolvimento.
+                A partir das inscrições, alguns negócios serão selecionados
+                para participar do desenvolvimento.
               </p>
 
               <div className="gold-line" />
@@ -253,13 +222,8 @@ export default function Home() {
 
           <div className="highlights">
             {benefits.map((benefit) => (
-              <article
-                className="highlight"
-                key={benefit.number}
-              >
-                <span className="highlight-number">
-                  {benefit.number}
-                </span>
+              <article className="highlight" key={benefit.number}>
+                <span className="highlight-number">{benefit.number}</span>
 
                 <h3>{benefit.title}</h3>
 
@@ -274,40 +238,31 @@ export default function Home() {
       <section className="section">
         <div className="container">
           <div className="section-heading">
-            <div className="section-label">
-              O QUE PODE SER CRIADO
-            </div>
+            <div className="section-label">O QUE PODE SER CRIADO</div>
 
             <h2 className="section-title">
-              A tecnologia deve
+              A solução começa
               <br />
-              se adaptar ao negócio.
+              com o seu problema.
             </h2>
 
             <p className="section-description">
-              Não existe uma solução única. O projeto será
-              pensado a partir da realidade e das
-              necessidades de cada empresa selecionada.
+              Você não precisa saber exatamente qual sistema, site ou
+              tecnologia precisa. Quero entender o seu negócio primeiro.
+              A partir disso, podemos descobrir o que faz sentido construir.
             </p>
           </div>
 
           <div className="services-grid">
-            {services.map((service) => (
-              <article
-                className="service-card"
-                key={service.number}
-              >
-                <span className="service-icon">
-                  {service.number}
-                </span>
+            {solutions.map((solution) => (
+              <article className="service-card" key={solution.number}>
+                <span className="service-icon">{solution.number}</span>
 
-                <h3>{service.title}</h3>
+                <h3>{solution.title}</h3>
 
-                <p>{service.description}</p>
+                <p>{solution.description}</p>
 
-                <span className="service-arrow">
-                  ↗
-                </span>
+                <span className="service-arrow">↗</span>
               </article>
             ))}
           </div>
@@ -318,9 +273,7 @@ export default function Home() {
       <section className="statement-section">
         <div className="container">
           <div className="statement">
-            <span className="statement-symbol">
-              ✦
-            </span>
+            <span className="statement-symbol">✦</span>
 
             <p>
               Talvez a próxima solução digital
@@ -340,28 +293,19 @@ export default function Home() {
       >
         <div className="container">
           <div className="section-heading">
-            <div className="section-label">
-              COMO FUNCIONA
-            </div>
+            <div className="section-label">COMO FUNCIONA</div>
 
             <h2 className="section-title">
-              Uma ideia.
+              Do problema
               <br />
-              Um negócio.
-              <br />
-              Um projeto real.
+              ao projeto.
             </h2>
           </div>
 
           <div className="steps">
             {steps.map((step) => (
-              <article
-                className="step"
-                key={step.number}
-              >
-                <span className="step-number">
-                  {step.number}
-                </span>
+              <article className="step" key={step.number}>
+                <span className="step-number">{step.number}</span>
 
                 <h3>{step.title}</h3>
 
@@ -377,9 +321,7 @@ export default function Home() {
         <div className="container">
           <div className="eligibility">
             <div>
-              <div className="section-label">
-                QUEM PODE PARTICIPAR
-              </div>
+              <div className="section-label">QUEM PODE PARTICIPAR</div>
 
               <h2 className="section-title">
                 Seu negócio não precisa
@@ -390,16 +332,20 @@ export default function Home() {
 
             <div className="eligibility-text">
               <p>
-                A iniciativa é voltada para lojas,
-                pequenos negócios, profissionais e empresas
-                que tenham uma necessidade que possa ser
-                solucionada através da tecnologia.
+                A iniciativa é voltada para lojas, pequenos negócios,
+                profissionais e empresas que tenham uma necessidade que possa
+                ser solucionada através da tecnologia.
               </p>
 
               <p>
-                O mais importante é existir uma ideia,
-                necessidade ou processo que faça sentido
-                transformar.
+                Não importa se você ainda não possui um sistema, se trabalha
+                com planilhas ou se sente que poderia fazer muita coisa de uma
+                forma mais organizada.
+              </p>
+
+              <p>
+                O mais importante é existir uma necessidade real e vontade de
+                encontrar uma solução.
               </p>
 
               <Link
@@ -413,23 +359,59 @@ export default function Home() {
         </div>
       </section>
 
+      {/* O QUE VOU ANALISAR */}
+      <section className="section section-dark">
+        <div className="container">
+          <div className="split-section">
+            <div className="section-heading">
+              <div className="section-label">SOBRE A SELEÇÃO</div>
+
+              <h2 className="section-title">
+                Mais do que
+                <br />
+                uma ideia.
+              </h2>
+            </div>
+
+            <div className="split-text">
+              <p>
+                Cada inscrição será analisada individualmente.
+              </p>
+
+              <p>
+                Vou buscar entender o problema apresentado, a realidade do
+                negócio, o impacto que uma solução poderia gerar e a
+                possibilidade de transformar essa necessidade em um projeto
+                viável.
+              </p>
+
+              <p>
+                Por isso, não é necessário chegar com tudo pronto. O formulário
+                existe justamente para eu conhecer melhor sua realidade.
+              </p>
+
+              <div className="gold-line" />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA FINAL */}
       <section className="cta campaign-cta">
         <div className="container cta-content">
           <div className="section-label">
-            AS INSCRIÇÕES ESTÃO ABERTAS
+            INSCRIÇÕES ABERTAS
           </div>
 
           <h2 className="section-title">
-            Vamos descobrir
+            Talvez o seu negócio
             <br />
-            o que podemos criar?
+            seja o próximo.
           </h2>
 
           <p className="cta-text">
-            Preencha o formulário e conte um pouco sobre
-            seu negócio, seus desafios e a solução que
-            gostaria de desenvolver.
+            Preencha o formulário e conte sobre sua empresa, seus desafios e
+            o que você gostaria de transformar através da tecnologia.
           </p>
 
           <Link
@@ -440,8 +422,7 @@ export default function Home() {
           </Link>
 
           <div className="cta-disclaimer">
-            O preenchimento do formulário não garante a
-            seleção do projeto.
+            O preenchimento do formulário não garante a seleção do projeto.
           </div>
         </div>
       </section>
@@ -459,9 +440,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="footer-mark">
-            AP
-          </div>
+          <div className="footer-mark">AP</div>
         </div>
       </footer>
     </main>
