@@ -1,59 +1,126 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import Link from "next/link";
 
 const WHATSAPP_NUMBER = "5521987103449";
 
-const steps = [
-  "VOCÊ",
-  "NEGÓCIO",
-  "PROJETO",
-  "NECESSIDADES",
-  "FINALIZAR",
-];
+type FormData = {
+  nome: string;
+  whatsapp: string;
+  email: string;
+  cidade: string;
+  instagramPessoal: string;
+  funcao: string;
 
-const functions = [
-  "Proprietário(a)",
-  "Sócio(a)",
-  "Gerente",
-  "Responsável pelo negócio",
-  "Outro",
-];
+  empresa: string;
+  instagramEmpresa: string;
+  site: string;
+  segmento: string;
+  tempoNegocio: string;
+  quantidadePessoas: string;
+  atendimento: string;
+  descricaoNegocio: string;
 
-const segments = [
-  "Loja de roupas",
-  "Loja de celulares",
-  "Beleza / Estética",
-  "Alimentação",
-  "Serviços",
-  "Comércio",
-  "Profissional autônomo",
-  "Outro",
-];
+  sistema: string;
+  qualSistema: string;
+  usoSistema: string;
+  gostaSistema: string;
+  incomodaSistema: string;
+  maiorDificuldade: string;
+  tarefaAutomatizar: string;
 
-const businessTime = [
-  "Menos de 1 ano",
-  "1–3 anos",
-  "3–5 anos",
-  "Mais de 5 anos",
-];
+  melhoriaTecnologia: string;
+  tiposProjeto: string[];
+  outroProjeto: string;
+  funcionamentoProjeto: string;
 
-const businessPresenceOptions = [
-  "Físico",
-  "Online",
-  "Físico e online",
-];
+  objetivos: string[];
+  outroObjetivo: string;
+  projetoSucesso: string;
 
-const systemOptions = [
-  "Não utilizo",
-  "Sim, utilizo um sistema",
-  "Utilizo planilhas",
-  "Utilizo várias ferramentas diferentes",
-  "Utilizo ferramentas, mas ainda faço muita coisa manualmente",
-];
+  funcionalidades: string[];
+  outraFuncionalidade: string;
+  funcaoEspecifica: string;
 
-const projectTypes = [
+  presencaDigital: string[];
+  melhoriaDigital: string;
+
+  referencias: string;
+  gostaReferencias: string;
+
+  boaCandidata: string;
+  porQueAgora: string;
+  mudariaNegocio: string;
+
+  disponibilidade: string;
+  responsavelProjeto: string;
+
+  portfolio: string;
+  imagens: string;
+
+  informacoesAdicionais: string;
+  porQueParticipar: string;
+};
+
+const initialForm: FormData = {
+  nome: "",
+  whatsapp: "",
+  email: "",
+  cidade: "",
+  instagramPessoal: "",
+  funcao: "",
+
+  empresa: "",
+  instagramEmpresa: "",
+  site: "",
+  segmento: "",
+  tempoNegocio: "",
+  quantidadePessoas: "",
+  atendimento: "",
+  descricaoNegocio: "",
+
+  sistema: "",
+  qualSistema: "",
+  usoSistema: "",
+  gostaSistema: "",
+  incomodaSistema: "",
+  maiorDificuldade: "",
+  tarefaAutomatizar: "",
+
+  melhoriaTecnologia: "",
+  tiposProjeto: [],
+  outroProjeto: "",
+  funcionamentoProjeto: "",
+
+  objetivos: [],
+  outroObjetivo: "",
+  projetoSucesso: "",
+
+  funcionalidades: [],
+  outraFuncionalidade: "",
+  funcaoEspecifica: "",
+
+  presencaDigital: [],
+  melhoriaDigital: "",
+
+  referencias: "",
+  gostaReferencias: "",
+
+  boaCandidata: "",
+  porQueAgora: "",
+  mudariaNegocio: "",
+
+  disponibilidade: "",
+  responsavelProjeto: "",
+
+  portfolio: "",
+  imagens: "",
+
+  informacoesAdicionais: "",
+  porQueParticipar: "",
+};
+
+const projetos = [
   "Site profissional",
   "Loja virtual",
   "Landing page",
@@ -68,7 +135,7 @@ const projectTypes = [
   "Outro",
 ];
 
-const objectives = [
+const objetivos = [
   "Atrair mais clientes",
   "Aumentar vendas",
   "Organizar o negócio",
@@ -82,7 +149,7 @@ const objectives = [
   "Outro",
 ];
 
-const functionalities = [
+const funcionalidades = [
   "Cadastro de clientes",
   "Cadastro de produtos",
   "Controle de estoque",
@@ -103,7 +170,7 @@ const functionalities = [
   "Outra",
 ];
 
-const digitalPresenceOptions = [
+const presenca = [
   "Instagram",
   "WhatsApp Business",
   "Site",
@@ -112,1510 +179,1283 @@ const digitalPresenceOptions = [
   "Nenhum desses",
 ];
 
-type FormData = {
-  name: string;
-  whatsapp: string;
-  email: string;
-  city: string;
-  personalInstagram: string;
-  role: string;
+function formatPhone(value: string) {
+  const numbers = value.replace(/\D/g, "").slice(0, 11);
 
-  business: string;
-  instagram: string;
-  website: string;
-  segment: string;
-  businessTime: string;
-  businessPresence: string[];
-  businessDescription: string;
-  system: string;
-  systemName: string;
-  systemUse: string;
-  systemLikes: string;
-  systemProblems: string;
-  biggestDifficulty: string;
-  repetitiveTasks: string;
+  if (numbers.length <= 2) {
+    return numbers;
+  }
 
-  projectType: string;
-  projectDescription: string;
-  projectObjective: string;
-  objectives: string[];
-  successDefinition: string;
+  if (numbers.length <= 7) {
+    return `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`;
+  }
 
-  functionalities: string[];
-  specificFunctionality: string;
-  digitalPresence: string[];
-  digitalImprovement: string;
-  references: string;
-  referenceDetails: string;
+  return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(
+    7
+  )}`;
+}
 
-  whyCandidate: string;
-  whyNow: string;
-  expectedChange: string;
-  availability: string;
-  responsiblePerson: string;
+function toggleArrayValue(
+  field: keyof FormData,
+  value: string,
+  form: FormData,
+  setForm: React.Dispatch<React.SetStateAction<FormData>>
+) {
+  const current = form[field];
 
-  portfolioAuthorization: string;
-  imageAuthorization: string;
-  additionalInformation: string;
-  whyProject: string;
-};
+  if (!Array.isArray(current)) return;
 
-const initialForm: FormData = {
-  name: "",
-  whatsapp: "",
-  email: "",
-  city: "",
-  personalInstagram: "",
-  role: "",
+  const updated = current.includes(value)
+    ? current.filter((item) => item !== value)
+    : [...current, value];
 
-  business: "",
-  instagram: "",
-  website: "",
-  segment: "",
-  businessTime: "",
-  businessPresence: [],
-  businessDescription: "",
-  system: "",
-  systemName: "",
-  systemUse: "",
-  systemLikes: "",
-  systemProblems: "",
-  biggestDifficulty: "",
-  repetitiveTasks: "",
+  setForm({
+    ...form,
+    [field]: updated,
+  });
+}
 
-  projectType: "",
-  projectDescription: "",
-  projectObjective: "",
-  objectives: [],
-  successDefinition: "",
-
-  functionalities: [],
-  specificFunctionality: "",
-  digitalPresence: [],
-  digitalImprovement: "",
-  references: "",
-  referenceDetails: "",
-
-  whyCandidate: "",
-  whyNow: "",
-  expectedChange: "",
-  availability: "",
-  responsiblePerson: "",
-
-  portfolioAuthorization: "",
-  imageAuthorization: "",
-  additionalInformation: "",
-  whyProject: "",
-};
+function formatList(items: string[], fallback = "Não informado") {
+  return items.length > 0 ? items.join(", ") : fallback;
+}
 
 export default function ParticiparPage() {
-  const [step, setStep] = useState(0);
   const [form, setForm] = useState<FormData>(initialForm);
-  const [error, setError] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
 
-  const updateField = (
-    field: keyof FormData,
-    value: string | string[]
-  ) => {
+  function updateField(field: keyof FormData, value: string) {
     setForm((current) => ({
       ...current,
       [field]: value,
     }));
+  }
 
-    setError("");
-  };
-
-  const toggleOption = (
-    field: "businessPresence" | "objectives" | "functionalities" | "digitalPresence",
-    value: string
-  ) => {
-    setForm((current) => {
-      const currentValues = current[field];
-
-      const updatedValues = currentValues.includes(value)
-        ? currentValues.filter((item) => item !== value)
-        : [...currentValues, value];
-
-      return {
-        ...current,
-        [field]: updatedValues,
-      };
-    });
-
-    setError("");
-  };
-
-  const validateStep = () => {
-    if (step === 0) {
-      if (!form.name.trim()) {
-        setError("Digite seu nome completo.");
-        return false;
-      }
-
-      if (!form.whatsapp.trim()) {
-        setError("Digite seu WhatsApp.");
-        return false;
-      }
-
-      if (!form.email.trim()) {
-        setError("Digite seu e-mail.");
-        return false;
-      }
-
-      if (!form.city.trim()) {
-        setError("Digite sua cidade e estado.");
-        return false;
-      }
-
-      if (!form.role) {
-        setError("Selecione qual é sua função no negócio.");
-        return false;
-      }
-    }
-
-    if (step === 1) {
-      if (!form.business.trim()) {
-        setError("Digite o nome da empresa ou negócio.");
-        return false;
-      }
-
-      if (!form.segment) {
-        setError("Selecione o segmento do negócio.");
-        return false;
-      }
-
-      if (!form.businessTime) {
-        setError("Informe há quanto tempo o negócio existe.");
-        return false;
-      }
-
-      if (form.businessPresence.length === 0) {
-        setError("Selecione como o negócio funciona atualmente.");
-        return false;
-      }
-
-      if (!form.businessDescription.trim()) {
-        setError("Conte um pouco sobre o seu negócio.");
-        return false;
-      }
-
-      if (!form.system) {
-        setError("Informe como você administra o negócio atualmente.");
-        return false;
-      }
-
-      if (
-        form.system !== "Não utilizo" &&
-        !form.systemName.trim()
-      ) {
-        setError("Informe qual sistema ou ferramenta você utiliza.");
-        return false;
-      }
-
-      if (!form.biggestDifficulty.trim()) {
-        setError(
-          "Conte qual é a maior dificuldade que você enfrenta atualmente."
-        );
-        return false;
-      }
-
-      if (!form.repetitiveTasks.trim()) {
-        setError(
-          "Conte se existe alguma tarefa repetitiva que poderia ser automatizada."
-        );
-        return false;
-      }
-    }
-
-    if (step === 2) {
-      if (!form.projectType) {
-        setError("Selecione o tipo de projeto que você imagina.");
-        return false;
-      }
-
-      if (!form.projectDescription.trim()) {
-        setError(
-          "Explique com suas palavras como você gostaria que o projeto funcionasse."
-        );
-        return false;
-      }
-
-      if (form.objectives.length === 0) {
-        setError("Selecione pelo menos um objetivo para o projeto.");
-        return false;
-      }
-
-      if (!form.successDefinition.trim()) {
-        setError(
-          "Conte como você saberia que o projeto deu certo."
-        );
-        return false;
-      }
-    }
-
-    if (step === 3) {
-      if (form.functionalities.length === 0) {
-        setError(
-          "Selecione pelo menos uma funcionalidade que seria importante."
-        );
-        return false;
-      }
-
-      if (form.digitalPresence.length === 0) {
-        setError(
-          "Informe quais canais digitais o negócio possui atualmente."
-        );
-        return false;
-      }
-
-      if (!form.digitalImprovement.trim()) {
-        setError(
-          "Conte o que você gostaria de melhorar na presença digital."
-        );
-        return false;
-      }
-
-      if (!form.whyCandidate.trim()) {
-        setError(
-          "Conte por que sua empresa seria uma boa candidata."
-        );
-        return false;
-      }
-
-      if (!form.whyNow.trim()) {
-        setError(
-          "Conte por que decidiu procurar uma solução tecnológica agora."
-        );
-        return false;
-      }
-
-      if (!form.expectedChange.trim()) {
-        setError(
-          "Conte o que mudaria no seu negócio com esse projeto."
-        );
-        return false;
-      }
-
-      if (!form.availability) {
-        setError(
-          "Informe sua disponibilidade para acompanhar o desenvolvimento."
-        );
-        return false;
-      }
-
-      if (!form.responsiblePerson.trim()) {
-        setError(
-          "Informe quem será responsável por acompanhar o projeto."
-        );
-        return false;
-      }
-    }
-
-    if (step === 4) {
-      if (!form.portfolioAuthorization) {
-        setError(
-          "Informe se autoriza a apresentação do projeto no portfólio."
-        );
-        return false;
-      }
-
-      if (!form.imageAuthorization) {
-        setError(
-          "Informe se autoriza a utilização de imagens do projeto."
-        );
-        return false;
-      }
-
-      if (!form.whyProject.trim()) {
-        setError(
-          "Conte por que você quer participar deste projeto."
-        );
-        return false;
-      }
-    }
-
-    setError("");
-    return true;
-  };
-
-  const nextStep = () => {
-    if (!validateStep()) return;
-
-    setStep((current) => Math.min(current + 1, steps.length - 1));
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
-
-  const previousStep = () => {
-    setError("");
-
-    setStep((current) => Math.max(current - 1, 0));
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
-
-  const formatWhatsApp = (value: string) => {
-    const numbers = value.replace(/\D/g, "");
-
-    if (numbers.length <= 2) {
-      return `(${numbers}`;
-    }
-
-    if (numbers.length <= 7) {
-      return `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`;
-    }
-
-    if (numbers.length <= 11) {
-      return `(${numbers.slice(0, 2)}) ${numbers.slice(
-        2,
-        7
-      )}-${numbers.slice(7)}`;
-    }
-
-    return value;
-  };
-
-  const buildWhatsAppMessage = () => {
-    const message = `
-🚀 NOVA INSCRIÇÃO — PROJETO LOJAS
-
-━━━━━━━━━━━━━━━━━━
-👤 SOBRE VOCÊ
-━━━━━━━━━━━━━━━━━━
-
-Nome: ${form.name}
-WhatsApp: ${form.whatsapp}
-E-mail: ${form.email}
-Cidade/Estado: ${form.city}
-Instagram pessoal: ${form.personalInstagram || "Não informado"}
-Função: ${form.role}
-
-━━━━━━━━━━━━━━━━━━
-🏢 SOBRE O NEGÓCIO
-━━━━━━━━━━━━━━━━━━
-
-Empresa: ${form.business}
-Instagram: ${form.instagram || "Não informado"}
-Site: ${form.website || "Não possui / não informado"}
-Segmento: ${form.segment}
-Tempo de atuação: ${form.businessTime}
-Presença: ${form.businessPresence.join(", ")}
-
-Sobre o negócio:
-${form.businessDescription}
-
-━━━━━━━━━━━━━━━━━━
-🔎 COMO FUNCIONA HOJE
-━━━━━━━━━━━━━━━━━━
-
-Sistema/ferramentas:
-${form.system}
-
-Sistema utilizado:
-${form.systemName || "Não informado"}
-
-Como utiliza:
-${form.systemUse || "Não informado"}
-
-O que gosta:
-${form.systemLikes || "Não informado"}
-
-O que incomoda:
-${form.systemProblems || "Não informado"}
-
-Maior dificuldade:
-${form.biggestDifficulty}
-
-Tarefas repetitivas / automatização:
-${form.repetitiveTasks}
-
-━━━━━━━━━━━━━━━━━━
-💡 SOBRE O PROJETO
-━━━━━━━━━━━━━━━━━━
-
-Tipo de projeto:
-${form.projectType}
-
-Como gostaria que funcionasse:
-${form.projectDescription}
-
-Objetivo principal:
-${form.projectObjective || "Não informado"}
-
-Objetivos selecionados:
-${form.objectives.join(", ")}
-
-Como saberia que deu certo:
-${form.successDefinition}
-
-━━━━━━━━━━━━━━━━━━
-⚙️ NECESSIDADES
-━━━━━━━━━━━━━━━━━━
-
-Funcionalidades:
-${form.functionalities.join(", ")}
-
-Função específica:
-${form.specificFunctionality || "Não informado"}
-
-Presença digital:
-${form.digitalPresence.join(", ")}
-
-O que deseja melhorar:
-${form.digitalImprovement}
-
-Referências:
-${form.references || "Não informado"}
-
-O que gosta nas referências:
-${form.referenceDetails || "Não informado"}
-
-━━━━━━━━━━━━━━━━━━
-🤝 SOBRE A PARTICIPAÇÃO
-━━━━━━━━━━━━━━━━━━
-
-Por que seria uma boa candidata:
-${form.whyCandidate}
-
-Por que procurar uma solução agora:
-${form.whyNow}
-
-O que mudaria no negócio:
-${form.expectedChange}
-
-Disponibilidade:
-${form.availability}
-
-Responsável pelo projeto:
-${form.responsiblePerson}
-
-━━━━━━━━━━━━━━━━━━
-📸 AUTORIZAÇÕES
-━━━━━━━━━━━━━━━━━━
-
-Portfólio:
-${form.portfolioAuthorization}
-
-Imagens do projeto:
-${form.imageAuthorization}
-
-━━━━━━━━━━━━━━━━━━
-⭐ PERGUNTA FINAL
-━━━━━━━━━━━━━━━━━━
-
-Informações adicionais:
-${form.additionalInformation || "Não informado"}
-
-Por que quer participar:
-${form.whyProject}
-
-━━━━━━━━━━━━━━━━━━
-📋 Projeto Lojas
-Agatha Pinheiro — Digital Solutions
-`.trim();
-
-    return message;
-  };
-
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (!validateStep()) return;
+    if (sending) return;
 
-    const message = buildWhatsAppMessage();
+    setSending(true);
+
+    const message = `
+NOVA INSCRIÇÃO — PROJETO AGATHA
+
+━━━━━━━━━━━━━━━━━━━━━━
+01. SOBRE VOCÊ
+━━━━━━━━━━━━━━━━━━━━━━
+
+Nome completo:
+${form.nome || "Não informado"}
+
+WhatsApp:
+${form.whatsapp || "Não informado"}
+
+E-mail:
+${form.email || "Não informado"}
+
+Cidade/Estado:
+${form.cidade || "Não informado"}
+
+Instagram pessoal:
+${form.instagramPessoal || "Não informado"}
+
+Função no negócio:
+${form.funcao || "Não informado"}
+
+
+━━━━━━━━━━━━━━━━━━━━━━
+02. SOBRE O NEGÓCIO
+━━━━━━━━━━━━━━━━━━━━━━
+
+Empresa/Loja:
+${form.empresa || "Não informado"}
+
+Instagram da empresa:
+${form.instagramEmpresa || "Não informado"}
+
+Site atual:
+${form.site || "Não informado"}
+
+Segmento:
+${form.segmento || "Não informado"}
+
+Tempo de existência:
+${form.tempoNegocio || "Não informado"}
+
+Quantidade de pessoas:
+${form.quantidadePessoas || "Não informado"}
+
+Atendimento:
+${form.atendimento || "Não informado"}
+
+Sobre o negócio:
+${form.descricaoNegocio || "Não informado"}
+
+
+━━━━━━━━━━━━━━━━━━━━━━
+03. COMO FUNCIONA HOJE
+━━━━━━━━━━━━━━━━━━━━━━
+
+Sistema/Ferramentas:
+${form.sistema || "Não informado"}
+
+Qual sistema/ferramenta:
+${form.qualSistema || "Não informado"}
+
+Para que utiliza:
+${form.usoSistema || "Não informado"}
+
+O que gosta:
+${form.gostaSistema || "Não informado"}
+
+O que mais incomoda:
+${form.incomodaSistema || "Não informado"}
+
+Maior dificuldade:
+${form.maiorDificuldade || "Não informado"}
+
+Tarefa que poderia ser automatizada:
+${form.tarefaAutomatizar || "Não informado"}
+
+
+━━━━━━━━━━━━━━━━━━━━━━
+04. SOBRE O PROJETO
+━━━━━━━━━━━━━━━━━━━━━━
+
+O que gostaria de melhorar através da tecnologia:
+${form.melhoriaTecnologia || "Não informado"}
+
+Tipo de projeto:
+${formatList(form.tiposProjeto)}
+
+Outro tipo de projeto:
+${form.outroProjeto || "Não informado"}
+
+Como gostaria que funcionasse:
+${form.funcionamentoProjeto || "Não informado"}
+
+
+━━━━━━━━━━━━━━━━━━━━━━
+05. OBJETIVO
+━━━━━━━━━━━━━━━━━━━━━━
+
+Objetivos:
+${formatList(form.objetivos)}
+
+Outro objetivo:
+${form.outroObjetivo || "Não informado"}
+
+Como saberia que deu certo:
+${form.projetoSucesso || "Não informado"}
+
+
+━━━━━━━━━━━━━━━━━━━━━━
+06. FUNCIONALIDADES
+━━━━━━━━━━━━━━━━━━━━━━
+
+Funcionalidades importantes:
+${formatList(form.funcionalidades)}
+
+Outra funcionalidade:
+${form.outraFuncionalidade || "Não informado"}
+
+Função específica:
+${form.funcaoEspecifica || "Não informado"}
+
+
+━━━━━━━━━━━━━━━━━━━━━━
+07. PRESENÇA DIGITAL
+━━━━━━━━━━━━━━━━━━━━━━
+
+Presença digital:
+${formatList(form.presencaDigital)}
+
+O que gostaria de melhorar:
+${form.melhoriaDigital || "Não informado"}
+
+
+━━━━━━━━━━━━━━━━━━━━━━
+08. REFERÊNCIAS
+━━━━━━━━━━━━━━━━━━━━━━
+
+Referências:
+${form.referencias || "Não informado"}
+
+O que gosta nessas referências:
+${form.gostaReferencias || "Não informado"}
+
+
+━━━━━━━━━━━━━━━━━━━━━━
+09. SOBRE A NECESSIDADE
+━━━━━━━━━━━━━━━━━━━━━━
+
+Por que seria uma boa candidata:
+${form.boaCandidata || "Não informado"}
+
+Por que procurar uma solução agora:
+${form.porQueAgora || "Não informado"}
+
+O que mudaria no negócio:
+${form.mudariaNegocio || "Não informado"}
+
+
+━━━━━━━━━━━━━━━━━━━━━━
+10. DISPONIBILIDADE
+━━━━━━━━━━━━━━━━━━━━━━
+
+Disponibilidade:
+${form.disponibilidade || "Não informado"}
+
+Responsável pelo projeto:
+${form.responsavelProjeto || "Não informado"}
+
+
+━━━━━━━━━━━━━━━━━━━━━━
+11. PORTFÓLIO / DIVULGAÇÃO
+━━━━━━━━━━━━━━━━━━━━━━
+
+Autoriza projeto no portfólio:
+${form.portfolio || "Não informado"}
+
+Autoriza utilização de imagens:
+${form.imagens || "Não informado"}
+
+
+━━━━━━━━━━━━━━━━━━━━━━
+12. FINALIZAÇÃO
+━━━━━━━━━━━━━━━━━━━━━━
+
+Informações adicionais:
+${form.informacoesAdicionais || "Não informado"}
+
+Por que quer participar:
+${form.porQueParticipar || "Não informado"}
+
+━━━━━━━━━━━━━━━━━━━━━━
+
+Inscrição enviada através do Projeto Agatha.
+`.trim();
 
     const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
       message
     )}`;
 
-    setSubmitted(true);
-
     window.open(whatsappUrl, "_blank", "noopener,noreferrer");
-  };
 
-  if (submitted) {
+    setTimeout(() => {
+      setSending(false);
+      setSent(true);
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }, 500);
+  }
+
+  if (sent) {
     return (
       <main className="form-page">
-        <div className="form-success">
-          <div className="success-icon">✓</div>
+        <section className="form-header">
+          <div className="form-intro">
+            <span className="eyebrow">INSCRIÇÃO PREPARADA</span>
 
-          <span className="eyebrow">FORMULÁRIO FINALIZADO</span>
+            <h1>
+              Sua inscrição
+              <br />
+              está pronta.
+            </h1>
 
-          <h1>
-            Obrigada por
-            <br />
-            compartilhar sua ideia.
-          </h1>
+            <p>
+              As informações foram organizadas e o WhatsApp foi aberto para
+              que você possa enviar sua inscrição.
+            </p>
 
-          <p>
-            Sua inscrição foi organizada e o WhatsApp foi aberto
-            com todas as informações preenchidas.
-          </p>
+            <div className="final-notice">
+              <strong>Importante</strong>
+              <span>
+                Verifique o WhatsApp e confirme o envio da mensagem. Sua
+                inscrição só será recebida após o envio.
+              </span>
+            </div>
 
-          <p className="success-note">
-            Caso o WhatsApp não tenha aberto automaticamente,
-            você pode voltar e tentar novamente.
-          </p>
-
-          <Link href="/" className="btn btn-gold">
-            Voltar para o início
-          </Link>
-        </div>
+            <div className="form-navigation">
+              <button
+                type="button"
+                className="btn btn-gold"
+                onClick={() => {
+                  setSent(false);
+                  window.scrollTo({
+                    top: 0,
+                    behavior: "smooth",
+                  });
+                }}
+              >
+                VOLTAR AO FORMULÁRIO
+              </button>
+            </div>
+          </div>
+        </section>
       </main>
     );
   }
 
   return (
     <main className="form-page">
-      <header className="form-header">
-        <Link href="/" className="form-logo">
-          <span>AP</span>
-          <div>
-            <strong>AGATHA PINHEIRO</strong>
-            <small>DIGITAL SOLUTIONS</small>
-          </div>
-        </Link>
+      {/* INTRODUÇÃO */}
+      <section className="form-header">
+        <div className="form-intro">
+          <a href="/" className="form-back">
+            ← VOLTAR PARA O INÍCIO
+          </a>
 
-        <Link href="/" className="form-back">
-          ← Voltar
-        </Link>
-      </header>
+          <span className="eyebrow">PROJETO AGATHA</span>
 
-      <section className="form-intro">
-        <span className="eyebrow">PROJETO LOJAS</span>
+          <h1>
+            Participe
+            <br />
+            do projeto.
+          </h1>
 
-        <h1>
-          Conte sobre o seu
-          <br />
-          <span>negócio.</span>
-        </h1>
+          <p>
+            Estou selecionando negócios reais para desenvolver uma solução
+            digital personalizada, pensada para as necessidades de cada
+            empresa.
+          </p>
 
-        <p>
-          Quero entender sua empresa, seus desafios e a solução
-          que você gostaria de construir. Quanto mais detalhes
-          você compartilhar, melhor poderei analisar sua ideia.
-        </p>
+          <p>
+            Conte sobre o seu negócio, os desafios que enfrenta hoje e o que
+            gostaria de transformar através da tecnologia.
+          </p>
+
+          <a href="#inscricao" className="btn btn-gold">
+            QUERO PARTICIPAR ↓
+          </a>
+        </div>
+
+        <div className="form-header-side">
+          <span>01</span>
+          <strong>Uma ideia.</strong>
+          <strong>Um problema real.</strong>
+          <strong>Uma solução criada sob medida.</strong>
+        </div>
       </section>
 
-      <div className="form-progress">
-        <div className="progress-line">
-          <div
-            className="progress-fill"
-            style={{
-              width: `${(step / (steps.length - 1)) * 100}%`,
-            }}
-          />
-        </div>
-
-        <div className="step-list">
-          {steps.map((item, index) => (
-            <div
-              key={item}
-              className={`step-item ${
-                index === step ? "active" : ""
-              } ${index < step ? "completed" : ""}`}
-            >
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <small>{item}</small>
+      {/* FORMULÁRIO */}
+      <form
+        id="inscricao"
+        className="application-form"
+        onSubmit={handleSubmit}
+      >
+        {/* 01 */}
+        <section className="form-section">
+          <div className="section-heading">
+            <span>01</span>
+            <div>
+              <p className="eyebrow">SOBRE VOCÊ</p>
+              <h2>Quem está por trás do negócio?</h2>
+              <p>
+                Primeiro, quero conhecer você e entender qual é o seu papel
+                dentro da empresa.
+              </p>
             </div>
-          ))}
-        </div>
-      </div>
-
-      <form className="application-form" onSubmit={handleSubmit}>
-        {error && (
-          <div className="form-error">
-            <strong>Antes de continuar:</strong>
-            <span>{error}</span>
           </div>
-        )}
 
-        {step === 0 && (
-          <section className="form-section">
-            <div className="section-heading">
-              <span>01 / 05</span>
-              <h2>Primeiro, quero conhecer você.</h2>
-              <p>
-                Essas informações serão usadas para entrar em
-                contato caso sua empresa seja selecionada.
-              </p>
-            </div>
-
-            <div className="form-grid">
-              <label className="field full">
-                <span>Nome completo *</span>
-                <input
-                  type="text"
-                  placeholder="Digite seu nome completo"
-                  value={form.name}
-                  onChange={(event) =>
-                    updateField("name", event.target.value)
-                  }
-                />
-              </label>
-
-              <label className="field">
-                <span>WhatsApp *</span>
-                <input
-                  type="tel"
-                  placeholder="(21) 99999-9999"
-                  value={form.whatsapp}
-                  onChange={(event) =>
-                    updateField(
-                      "whatsapp",
-                      formatWhatsApp(event.target.value)
-                    )
-                  }
-                />
-              </label>
-
-              <label className="field">
-                <span>E-mail *</span>
-                <input
-                  type="email"
-                  placeholder="seuemail@exemplo.com"
-                  value={form.email}
-                  onChange={(event) =>
-                    updateField("email", event.target.value)
-                  }
-                />
-              </label>
-
-              <label className="field">
-                <span>Cidade / Estado *</span>
-                <input
-                  type="text"
-                  placeholder="Ex.: Rio de Janeiro / RJ"
-                  value={form.city}
-                  onChange={(event) =>
-                    updateField("city", event.target.value)
-                  }
-                />
-              </label>
-
-              <label className="field">
-                <span>Instagram pessoal</span>
-                <input
-                  type="text"
-                  placeholder="@seuinstagram"
-                  value={form.personalInstagram}
-                  onChange={(event) =>
-                    updateField(
-                      "personalInstagram",
-                      event.target.value
-                    )
-                  }
-                />
-              </label>
-            </div>
-
-            <div className="choice-field">
-              <span className="field-label">
-                Qual é sua função no negócio? *
-              </span>
-
-              <div className="choice-grid">
-                {functions.map((item) => (
-                  <button
-                    type="button"
-                    key={item}
-                    className={`choice ${
-                      form.role === item ? "selected" : ""
-                    }`}
-                    onClick={() => updateField("role", item)}
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
-        {step === 1 && (
-          <section className="form-section">
-            <div className="section-heading">
-              <span>02 / 05</span>
-              <h2>Agora, quero conhecer o negócio.</h2>
-              <p>
-                Quanto melhor eu entender como sua empresa funciona
-                hoje, melhor consigo identificar oportunidades.
-              </p>
-            </div>
-
-            <div className="form-grid">
-              <label className="field">
-                <span>Nome da empresa / negócio *</span>
-                <input
-                  type="text"
-                  placeholder="Nome da empresa"
-                  value={form.business}
-                  onChange={(event) =>
-                    updateField("business", event.target.value)
-                  }
-                />
-              </label>
-
-              <label className="field">
-                <span>Instagram da empresa</span>
-                <input
-                  type="text"
-                  placeholder="@suaempresa"
-                  value={form.instagram}
-                  onChange={(event) =>
-                    updateField("instagram", event.target.value)
-                  }
-                />
-              </label>
-
-              <label className="field">
-                <span>Site atual</span>
-                <input
-                  type="url"
-                  placeholder="https://..."
-                  value={form.website}
-                  onChange={(event) =>
-                    updateField("website", event.target.value)
-                  }
-                />
-              </label>
-            </div>
-
-            <div className="choice-field">
-              <span className="field-label">
-                Qual é o segmento do negócio? *
-              </span>
-
-              <div className="choice-grid">
-                {segments.map((item) => (
-                  <button
-                    type="button"
-                    key={item}
-                    className={`choice ${
-                      form.segment === item ? "selected" : ""
-                    }`}
-                    onClick={() =>
-                      updateField("segment", item)
-                    }
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="choice-field">
-              <span className="field-label">
-                Há quanto tempo o negócio existe? *
-              </span>
-
-              <div className="choice-grid">
-                {businessTime.map((item) => (
-                  <button
-                    type="button"
-                    key={item}
-                    className={`choice ${
-                      form.businessTime === item
-                        ? "selected"
-                        : ""
-                    }`}
-                    onClick={() =>
-                      updateField("businessTime", item)
-                    }
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="choice-field">
-              <span className="field-label">
-                Como o negócio funciona atualmente? *
-              </span>
-
-              <div className="choice-grid">
-                {businessPresenceOptions.map((item) => (
-                  <button
-                    type="button"
-                    key={item}
-                    className={`choice ${
-                      form.businessPresence.includes(item)
-                        ? "selected"
-                        : ""
-                    }`}
-                    onClick={() =>
-                      toggleOption("businessPresence", item)
-                    }
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <label className="field full">
-              <span>Conte um pouco sobre o seu negócio. *</span>
-              <textarea
-                rows={5}
-                placeholder="O que sua empresa faz, quais produtos ou serviços oferece e como funciona atualmente?"
-                value={form.businessDescription}
-                onChange={(event) =>
-                  updateField(
-                    "businessDescription",
-                    event.target.value
-                  )
-                }
-              />
-            </label>
-
-            <div className="choice-field">
-              <span className="field-label">
-                Como você administra o negócio atualmente? *
-              </span>
-
-              <div className="choice-grid">
-                {systemOptions.map((item) => (
-                  <button
-                    type="button"
-                    key={item}
-                    className={`choice ${
-                      form.system === item ? "selected" : ""
-                    }`}
-                    onClick={() => updateField("system", item)}
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {form.system &&
-              form.system !== "Não utilizo" && (
-                <div className="form-grid">
-                  <label className="field full">
-                    <span>
-                      Qual sistema ou ferramenta você utiliza? *
-                    </span>
-                    <input
-                      type="text"
-                      placeholder="Ex.: Excel, sistema próprio, Trello..."
-                      value={form.systemName}
-                      onChange={(event) =>
-                        updateField(
-                          "systemName",
-                          event.target.value
-                        )
-                      }
-                    />
-                  </label>
-
-                  <label className="field">
-                    <span>Para que você utiliza?</span>
-                    <textarea
-                      rows={4}
-                      placeholder="Explique como essa ferramenta ajuda hoje."
-                      value={form.systemUse}
-                      onChange={(event) =>
-                        updateField(
-                          "systemUse",
-                          event.target.value
-                        )
-                      }
-                    />
-                  </label>
-
-                  <label className="field">
-                    <span>O que você gosta nele?</span>
-                    <textarea
-                      rows={4}
-                      placeholder="O que funciona bem para você?"
-                      value={form.systemLikes}
-                      onChange={(event) =>
-                        updateField(
-                          "systemLikes",
-                          event.target.value
-                        )
-                      }
-                    />
-                  </label>
-
-                  <label className="field full">
-                    <span>O que mais te incomoda?</span>
-                    <textarea
-                      rows={4}
-                      placeholder="O que poderia ser melhor?"
-                      value={form.systemProblems}
-                      onChange={(event) =>
-                        updateField(
-                          "systemProblems",
-                          event.target.value
-                        )
-                      }
-                    />
-                  </label>
-                </div>
-              )}
-
-            <label className="field full">
-              <span>
-                Qual é a maior dificuldade que você enfrenta
-                hoje? *
-              </span>
-              <textarea
-                rows={5}
-                placeholder="Descreva o principal problema ou dificuldade do negócio."
-                value={form.biggestDifficulty}
-                onChange={(event) =>
-                  updateField(
-                    "biggestDifficulty",
-                    event.target.value
-                  )
-                }
-              />
-            </label>
-
-            <label className="field full">
-              <span>
-                Existe alguma tarefa repetitiva que poderia ser
-                automatizada? *
-              </span>
-              <textarea
-                rows={5}
-                placeholder="Ex.: responder clientes, cadastrar vendas, controlar estoque, enviar mensagens..."
-                value={form.repetitiveTasks}
-                onChange={(event) =>
-                  updateField(
-                    "repetitiveTasks",
-                    event.target.value
-                  )
-                }
-              />
-            </label>
-          </section>
-        )}
-
-        {step === 2 && (
-          <section className="form-section">
-            <div className="section-heading">
-              <span>03 / 05</span>
-              <h2>Vamos falar sobre a sua ideia.</h2>
-              <p>
-                Não precisa saber explicar tecnicamente. Quero
-                entender a sua ideia com as suas próprias palavras.
-              </p>
-            </div>
-
-            <div className="choice-field">
-              <span className="field-label">
-                Que tipo de projeto você imagina? *
-              </span>
-
-              <div className="choice-grid">
-                {projectTypes.map((item) => (
-                  <button
-                    type="button"
-                    key={item}
-                    className={`choice ${
-                      form.projectType === item
-                        ? "selected"
-                        : ""
-                    }`}
-                    onClick={() =>
-                      updateField("projectType", item)
-                    }
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <label className="field full">
-              <span>
-                Explique como você gostaria que o projeto
-                funcionasse. *
-              </span>
-              <textarea
-                rows={7}
-                placeholder="Imagine que você está explicando sua ideia para alguém que nunca viu seu negócio. O que essa solução deveria fazer?"
-                value={form.projectDescription}
-                onChange={(event) =>
-                  updateField(
-                    "projectDescription",
-                    event.target.value
-                  )
-                }
-              />
-            </label>
-
-            <label className="field full">
-              <span>
-                Qual seria o principal objetivo do projeto?
-              </span>
-              <textarea
-                rows={4}
-                placeholder="Qual problema você gostaria de resolver primeiro?"
-                value={form.projectObjective}
-                onChange={(event) =>
-                  updateField(
-                    "projectObjective",
-                    event.target.value
-                  )
-                }
-              />
-            </label>
-
-            <div className="choice-field">
-              <span className="field-label">
-                O que você espera alcançar? *
-              </span>
-
-              <div className="choice-grid">
-                {objectives.map((item) => (
-                  <button
-                    type="button"
-                    key={item}
-                    className={`choice ${
-                      form.objectives.includes(item)
-                        ? "selected"
-                        : ""
-                    }`}
-                    onClick={() =>
-                      toggleOption("objectives", item)
-                    }
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <label className="field full">
-              <span>
-                Como você saberia que o projeto deu certo? *
-              </span>
-              <textarea
-                rows={5}
-                placeholder="O que precisaria acontecer para você olhar para a solução e pensar: 'era exatamente disso que eu precisava'?"
-                value={form.successDefinition}
-                onChange={(event) =>
-                  updateField(
-                    "successDefinition",
-                    event.target.value
-                  )
-                }
-              />
-            </label>
-          </section>
-        )}
-
-        {step === 3 && (
-          <section className="form-section">
-            <div className="section-heading">
-              <span>04 / 05</span>
-              <h2>Agora vamos aos detalhes.</h2>
-              <p>
-                Essas respostas ajudam a entender o que sua
-                solução realmente precisa ter.
-              </p>
-            </div>
-
-            <div className="choice-field">
-              <span className="field-label">
-                Quais funcionalidades seriam importantes? *
-              </span>
-
-              <div className="choice-grid">
-                {functionalities.map((item) => (
-                  <button
-                    type="button"
-                    key={item}
-                    className={`choice ${
-                      form.functionalities.includes(item)
-                        ? "selected"
-                        : ""
-                    }`}
-                    onClick={() =>
-                      toggleOption("functionalities", item)
-                    }
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <label className="field full">
-              <span>
-                Existe alguma função específica que você gostaria
-                de ter?
-              </span>
-              <textarea
-                rows={5}
-                placeholder="Pode ser algo que não apareceu na lista anterior."
-                value={form.specificFunctionality}
-                onChange={(event) =>
-                  updateField(
-                    "specificFunctionality",
-                    event.target.value
-                  )
-                }
-              />
-            </label>
-
-            <div className="choice-field">
-              <span className="field-label">
-                Quais canais digitais sua empresa possui? *
-              </span>
-
-              <div className="choice-grid">
-                {digitalPresenceOptions.map((item) => (
-                  <button
-                    type="button"
-                    key={item}
-                    className={`choice ${
-                      form.digitalPresence.includes(item)
-                        ? "selected"
-                        : ""
-                    }`}
-                    onClick={() =>
-                      toggleOption("digitalPresence", item)
-                    }
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <label className="field full">
-              <span>
-                O que você gostaria de melhorar na presença
-                digital da empresa? *
-              </span>
-              <textarea
-                rows={5}
-                placeholder="Conte o que hoje não funciona tão bem ou o que você gostaria de conquistar."
-                value={form.digitalImprovement}
-                onChange={(event) =>
-                  updateField(
-                    "digitalImprovement",
-                    event.target.value
-                  )
-                }
-              />
-            </label>
-
-            <div className="form-grid">
-              <label className="field">
-                <span>
-                  Existe algum site, sistema ou aplicativo que
-                  você gosta?
-                </span>
-                <textarea
-                  rows={5}
-                  placeholder="Cole links ou nomes de referências."
-                  value={form.references}
-                  onChange={(event) =>
-                    updateField(
-                      "references",
-                      event.target.value
-                    )
-                  }
-                />
-              </label>
-
-              <label className="field">
-                <span>
-                  O que você gosta nessas referências?
-                </span>
-                <textarea
-                  rows={5}
-                  placeholder="Visual, funcionalidades, organização, facilidade..."
-                  value={form.referenceDetails}
-                  onChange={(event) =>
-                    updateField(
-                      "referenceDetails",
-                      event.target.value
-                    )
-                  }
-                />
-              </label>
-            </div>
-
-            <div className="form-divider" />
-
-            <label className="field full">
-              <span>
-                Por que você acredita que sua empresa seria uma
-                boa candidata? *
-              </span>
-              <textarea
-                rows={5}
-                placeholder="Conte por que acredita que esse projeto faria sentido para o seu negócio."
-                value={form.whyCandidate}
-                onChange={(event) =>
-                  updateField(
-                    "whyCandidate",
-                    event.target.value
-                  )
-                }
-              />
-            </label>
-
-            <label className="field full">
-              <span>
-                Por que você decidiu procurar uma solução
-                tecnológica agora? *
-              </span>
-              <textarea
-                rows={5}
-                placeholder="O que aconteceu ou mudou para você sentir que esse é o momento?"
-                value={form.whyNow}
-                onChange={(event) =>
-                  updateField("whyNow", event.target.value)
-                }
-              />
-            </label>
-
-            <label className="field full">
-              <span>
-                O que mudaria no seu negócio se esse projeto fosse
-                desenvolvido? *
-              </span>
-              <textarea
-                rows={5}
-                placeholder="Pense no impacto que essa solução teria no dia a dia."
-                value={form.expectedChange}
-                onChange={(event) =>
-                  updateField(
-                    "expectedChange",
-                    event.target.value
-                  )
-                }
-              />
-            </label>
-
-            <div className="choice-field">
-              <span className="field-label">
-                Você teria disponibilidade para acompanhar o
-                desenvolvimento? *
-              </span>
-
-              <div className="choice-grid">
-                {[
-                  "Sim",
-                  "Não",
-                  "Depende da disponibilidade",
-                ].map((item) => (
-                  <button
-                    type="button"
-                    key={item}
-                    className={`choice ${
-                      form.availability === item
-                        ? "selected"
-                        : ""
-                    }`}
-                    onClick={() =>
-                      updateField("availability", item)
-                    }
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <label className="field full">
-              <span>
-                Quem será a pessoa responsável por acompanhar o
-                projeto? *
-              </span>
+          <div className="form-grid">
+            <label className="field">
+              <span>Nome completo *</span>
               <input
                 type="text"
-                placeholder="Nome da pessoa responsável"
-                value={form.responsiblePerson}
-                onChange={(event) =>
-                  updateField(
-                    "responsiblePerson",
-                    event.target.value
-                  )
-                }
+                required
+                value={form.nome}
+                onChange={(e) => updateField("nome", e.target.value)}
+                placeholder="Digite seu nome completo"
               />
             </label>
-          </section>
-        )}
 
-        {step === 4 && (
-          <section className="form-section">
-            <div className="section-heading">
-              <span>05 / 05</span>
-              <h2>Estamos quase lá.</h2>
+            <label className="field">
+              <span>WhatsApp *</span>
+              <input
+                type="tel"
+                required
+                value={form.whatsapp}
+                onChange={(e) =>
+                  updateField("whatsapp", formatPhone(e.target.value))
+                }
+                placeholder="(21) 99999-9999"
+              />
+            </label>
+
+            <label className="field">
+              <span>E-mail *</span>
+              <input
+                type="email"
+                required
+                value={form.email}
+                onChange={(e) => updateField("email", e.target.value)}
+                placeholder="seuemail@exemplo.com"
+              />
+            </label>
+
+            <label className="field">
+              <span>Cidade / Estado *</span>
+              <input
+                type="text"
+                required
+                value={form.cidade}
+                onChange={(e) => updateField("cidade", e.target.value)}
+                placeholder="Ex.: Rio de Janeiro / RJ"
+              />
+            </label>
+
+            <label className="field">
+              <span>Instagram pessoal</span>
+              <input
+                type="text"
+                value={form.instagramPessoal}
+                onChange={(e) =>
+                  updateField("instagramPessoal", e.target.value)
+                }
+                placeholder="@seuinstagram"
+              />
+            </label>
+          </div>
+
+          <div className="field">
+            <span>Qual é sua função no negócio? *</span>
+
+            <div className="choice-grid">
+              {[
+                "Proprietário(a)",
+                "Sócio(a)",
+                "Gerente",
+                "Responsável pelo negócio",
+                "Outro",
+              ].map((item) => (
+                <label className="choice" key={item}>
+                  <input
+                    type="radio"
+                    name="funcao"
+                    value={item}
+                    required
+                    checked={form.funcao === item}
+                    onChange={(e) => updateField("funcao", e.target.value)}
+                  />
+                  <span>{item}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 02 */}
+        <section className="form-section">
+          <div className="section-heading">
+            <span>02</span>
+            <div>
+              <p className="eyebrow">SOBRE O NEGÓCIO</p>
+              <h2>Quero conhecer sua empresa.</h2>
               <p>
-                Só preciso de algumas informações finais antes de
-                você enviar sua candidatura.
+                Quanto mais eu entender o contexto do negócio, melhor consigo
+                enxergar oportunidades.
               </p>
             </div>
+          </div>
 
-            <div className="choice-field">
-              <span className="field-label">
-                Você autoriza que o projeto seja apresentado no
-                meu portfólio profissional? *
-              </span>
-
-              <div className="choice-grid">
-                {[
-                  "Sim, autorizo",
-                  "Não autorizo",
-                  "Podemos conversar sobre isso",
-                ].map((item) => (
-                  <button
-                    type="button"
-                    key={item}
-                    className={`choice ${
-                      form.portfolioAuthorization === item
-                        ? "selected"
-                        : ""
-                    }`}
-                    onClick={() =>
-                      updateField(
-                        "portfolioAuthorization",
-                        item
-                      )
-                    }
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="choice-field">
-              <span className="field-label">
-                Autoriza a utilização de imagens do projeto ou da
-                empresa para divulgação profissional? *
-              </span>
-
-              <div className="choice-grid">
-                {[
-                  "Sim",
-                  "Não",
-                  "Podemos conversar sobre isso",
-                ].map((item) => (
-                  <button
-                    type="button"
-                    key={item}
-                    className={`choice ${
-                      form.imageAuthorization === item
-                        ? "selected"
-                        : ""
-                    }`}
-                    onClick={() =>
-                      updateField(
-                        "imageAuthorization",
-                        item
-                      )
-                    }
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <label className="field full">
-              <span>
-                Existe alguma informação importante que não
-                perguntamos?
-              </span>
-              <textarea
-                rows={5}
-                placeholder="Compartilhe qualquer detalhe que considere relevante."
-                value={form.additionalInformation}
-                onChange={(event) =>
-                  updateField(
-                    "additionalInformation",
-                    event.target.value
-                  )
-                }
+          <div className="form-grid">
+            <label className="field">
+              <span>Nome da empresa / loja *</span>
+              <input
+                type="text"
+                required
+                value={form.empresa}
+                onChange={(e) => updateField("empresa", e.target.value)}
+                placeholder="Nome da empresa"
               />
             </label>
 
-            <label className="field full">
-              <span>
-                Por que você quer participar deste projeto? *
-              </span>
-              <textarea
-                rows={7}
-                placeholder="Conte um pouco sobre sua motivação e o que essa oportunidade representaria para o seu negócio."
-                value={form.whyProject}
-                onChange={(event) =>
-                  updateField(
-                    "whyProject",
-                    event.target.value
-                  )
+            <label className="field">
+              <span>Instagram da empresa</span>
+              <input
+                type="text"
+                value={form.instagramEmpresa}
+                onChange={(e) =>
+                  updateField("instagramEmpresa", e.target.value)
                 }
+                placeholder="@empresa"
               />
             </label>
 
-            <div className="final-notice">
-              <div className="final-notice-icon">✦</div>
+            <label className="field">
+              <span>Site atual</span>
+              <input
+                type="url"
+                value={form.site}
+                onChange={(e) => updateField("site", e.target.value)}
+                placeholder="https://..."
+              />
+            </label>
 
-              <div>
-                <strong>Antes de enviar</strong>
-                <p>
-                  Ao clicar em &quot;Enviar candidatura&quot;, suas
-                  respostas serão organizadas em uma mensagem e o
-                  WhatsApp será aberto para que você envie as
-                  informações diretamente para a responsável pelo
-                  projeto.
-                </p>
-              </div>
+            <label className="field">
+              <span>Segmento do negócio *</span>
+              <input
+                type="text"
+                required
+                value={form.segmento}
+                onChange={(e) => updateField("segmento", e.target.value)}
+                placeholder="Ex.: alimentação, beleza, tecnologia..."
+              />
+            </label>
+
+            <label className="field">
+              <span>Quantas pessoas trabalham no negócio? *</span>
+              <input
+                type="text"
+                required
+                value={form.quantidadePessoas}
+                onChange={(e) =>
+                  updateField("quantidadePessoas", e.target.value)
+                }
+                placeholder="Ex.: 3 pessoas"
+              />
+            </label>
+          </div>
+
+          <div className="field">
+            <span>Há quanto tempo o negócio existe? *</span>
+
+            <div className="choice-grid">
+              {[
+                "Menos de 1 ano",
+                "1–3 anos",
+                "3–5 anos",
+                "Mais de 5 anos",
+              ].map((item) => (
+                <label className="choice" key={item}>
+                  <input
+                    type="radio"
+                    name="tempoNegocio"
+                    value={item}
+                    required
+                    checked={form.tempoNegocio === item}
+                    onChange={(e) =>
+                      updateField("tempoNegocio", e.target.value)
+                    }
+                  />
+                  <span>{item}</span>
+                </label>
+              ))}
             </div>
-          </section>
-        )}
+          </div>
 
-        <div className="form-navigation">
-          {step > 0 ? (
-            <button
-              type="button"
-              className="btn btn-outline"
-              onClick={previousStep}
-            >
-              ← Voltar
-            </button>
-          ) : (
-            <Link href="/" className="btn btn-outline">
-              Cancelar
-            </Link>
-          )}
+          <div className="field">
+            <span>O negócio possui atendimento: *</span>
 
-          {step < steps.length - 1 ? (
-            <button
-              type="button"
-              className="btn btn-gold"
-              onClick={nextStep}
-            >
-              Continuar →
-            </button>
-          ) : (
+            <div className="choice-grid">
+              {["Físico", "Online", "Físico e online"].map((item) => (
+                <label className="choice" key={item}>
+                  <input
+                    type="radio"
+                    name="atendimento"
+                    value={item}
+                    required
+                    checked={form.atendimento === item}
+                    onChange={(e) =>
+                      updateField("atendimento", e.target.value)
+                    }
+                  />
+                  <span>{item}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <label className="field">
+            <span>Conte um pouco sobre o seu negócio. *</span>
+            <textarea
+              required
+              rows={6}
+              value={form.descricaoNegocio}
+              onChange={(e) =>
+                updateField("descricaoNegocio", e.target.value)
+              }
+              placeholder="O que sua empresa faz, quais produtos ou serviços oferece e como funciona atualmente?"
+            />
+          </label>
+        </section>
+
+        {/* 03 */}
+        <section className="form-section">
+          <div className="section-heading">
+            <span>03</span>
+            <div>
+              <p className="eyebrow">COMO FUNCIONA HOJE</p>
+              <h2>Onde estão os problemas?</h2>
+              <p>
+                Essa é uma das partes mais importantes da inscrição. Quero
+                entender como o negócio funciona na prática.
+              </p>
+            </div>
+          </div>
+
+          <div className="field">
+            <span>Você já utiliza algum sistema ou ferramenta? *</span>
+
+            <div className="choice-grid">
+              {[
+                "Não utilizo",
+                "Sim, utilizo um sistema",
+                "Utilizo planilhas",
+                "Utilizo várias ferramentas diferentes",
+                "Utilizo ferramentas, mas ainda faço muita coisa manualmente",
+              ].map((item) => (
+                <label className="choice" key={item}>
+                  <input
+                    type="radio"
+                    name="sistema"
+                    value={item}
+                    required
+                    checked={form.sistema === item}
+                    onChange={(e) => updateField("sistema", e.target.value)}
+                  />
+                  <span>{item}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div className="form-grid">
+            <label className="field">
+              <span>Qual sistema / ferramenta?</span>
+              <input
+                type="text"
+                value={form.qualSistema}
+                onChange={(e) => updateField("qualSistema", e.target.value)}
+                placeholder="Nome do sistema, aplicativo ou ferramenta"
+              />
+            </label>
+
+            <label className="field">
+              <span>Para que você utiliza?</span>
+              <input
+                type="text"
+                value={form.usoSistema}
+                onChange={(e) => updateField("usoSistema", e.target.value)}
+                placeholder="Ex.: vendas, estoque, financeiro..."
+              />
+            </label>
+          </div>
+
+          <div className="form-grid">
+            <label className="field">
+              <span>O que você gosta nele?</span>
+              <textarea
+                rows={4}
+                value={form.gostaSistema}
+                onChange={(e) =>
+                  updateField("gostaSistema", e.target.value)
+                }
+                placeholder="O que funciona bem para você?"
+              />
+            </label>
+
+            <label className="field">
+              <span>O que mais te incomoda?</span>
+              <textarea
+                rows={4}
+                value={form.incomodaSistema}
+                onChange={(e) =>
+                  updateField("incomodaSistema", e.target.value)
+                }
+                placeholder="O que poderia ser melhor?"
+              />
+            </label>
+          </div>
+
+          <label className="field">
+            <span>Qual é a maior dificuldade que você enfrenta hoje? *</span>
+            <textarea
+              required
+              rows={6}
+              value={form.maiorDificuldade}
+              onChange={(e) =>
+                updateField("maiorDificuldade", e.target.value)
+              }
+              placeholder="Conte qual é hoje o maior problema na organização ou operação do negócio."
+            />
+          </label>
+
+          <label className="field">
+            <span>
+              Existe alguma tarefa que você ou sua equipe fazem repetidamente
+              e que poderia ser automatizada?
+            </span>
+            <textarea
+              rows={6}
+              value={form.tarefaAutomatizar}
+              onChange={(e) =>
+                updateField("tarefaAutomatizar", e.target.value)
+              }
+              placeholder="Ex.: responder clientes, cadastrar vendas, controlar estoque, enviar mensagens, fazer orçamento, agendar clientes, controlar pagamentos..."
+            />
+          </label>
+        </section>
+
+        {/* 04 */}
+        <section className="form-section">
+          <div className="section-heading">
+            <span>04</span>
+            <div>
+              <p className="eyebrow">SOBRE O PROJETO</p>
+              <h2>O que você gostaria de construir?</h2>
+              <p>
+                Não precisa saber exatamente qual tecnologia precisa. Quero
+                entender a ideia e o problema primeiro.
+              </p>
+            </div>
+          </div>
+
+          <label className="field">
+            <span>
+              Se você pudesse melhorar uma coisa no seu negócio através da
+              tecnologia hoje, o que seria? *
+            </span>
+            <textarea
+              required
+              rows={6}
+              value={form.melhoriaTecnologia}
+              onChange={(e) =>
+                updateField("melhoriaTecnologia", e.target.value)
+              }
+              placeholder="Descreva aquilo que mais gostaria de transformar."
+            />
+          </label>
+
+          <div className="field">
+            <span>Que tipo de projeto você imagina?</span>
+
+            <div className="choice-grid">
+              {projetos.map((item) => (
+                <label className="choice" key={item}>
+                  <input
+                    type="checkbox"
+                    checked={form.tiposProjeto.includes(item)}
+                    onChange={() =>
+                      toggleArrayValue(
+                        "tiposProjeto",
+                        item,
+                        form,
+                        setForm
+                      )
+                    }
+                  />
+                  <span>{item}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <label className="field">
+            <span>Outro tipo de projeto</span>
+            <input
+              type="text"
+              value={form.outroProjeto}
+              onChange={(e) => updateField("outroProjeto", e.target.value)}
+              placeholder="Se marcou outro, explique aqui"
+            />
+          </label>
+
+          <label className="field">
+            <span>
+              Explique com suas palavras como você gostaria que esse projeto
+              funcionasse. *
+            </span>
+            <textarea
+              required
+              rows={8}
+              value={form.funcionamentoProjeto}
+              onChange={(e) =>
+                updateField("funcionamentoProjeto", e.target.value)
+              }
+              placeholder="Imagine a solução funcionando no seu dia a dia. O que você gostaria que ela fizesse?"
+            />
+          </label>
+        </section>
+
+        {/* 05 */}
+        <section className="form-section">
+          <div className="section-heading">
+            <span>05</span>
+            <div>
+              <p className="eyebrow">OBJETIVO</p>
+              <h2>O que precisa mudar?</h2>
+              <p>
+                Aqui quero transformar a ideia em um objetivo mais concreto.
+              </p>
+            </div>
+          </div>
+
+          <div className="field">
+            <span>O que você espera alcançar com esse projeto?</span>
+
+            <div className="choice-grid">
+              {objetivos.map((item) => (
+                <label className="choice" key={item}>
+                  <input
+                    type="checkbox"
+                    checked={form.objetivos.includes(item)}
+                    onChange={() =>
+                      toggleArrayValue("objetivos", item, form, setForm)
+                    }
+                  />
+                  <span>{item}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <label className="field">
+            <span>Outro objetivo</span>
+            <input
+              type="text"
+              value={form.outroObjetivo}
+              onChange={(e) => updateField("outroObjetivo", e.target.value)}
+              placeholder="Outro resultado que você gostaria de alcançar"
+            />
+          </label>
+
+          <label className="field">
+            <span>Como você saberia que o projeto deu certo? *</span>
+            <textarea
+              required
+              rows={6}
+              value={form.projetoSucesso}
+              onChange={(e) =>
+                updateField("projetoSucesso", e.target.value)
+              }
+              placeholder="O que precisaria acontecer para você olhar para o projeto e pensar: valeu a pena?"
+            />
+          </label>
+        </section>
+
+        {/* 06 */}
+        <section className="form-section">
+          <div className="section-heading">
+            <span>06</span>
+            <div>
+              <p className="eyebrow">FUNCIONALIDADES</p>
+              <h2>O que seria importante ter?</h2>
+              <p>
+                Selecione tudo que fizer sentido para a realidade do seu
+                negócio.
+              </p>
+            </div>
+          </div>
+
+          <div className="field">
+            <span>Quais funcionalidades você acredita que seriam importantes?</span>
+
+            <div className="choice-grid">
+              {funcionalidades.map((item) => (
+                <label className="choice" key={item}>
+                  <input
+                    type="checkbox"
+                    checked={form.funcionalidades.includes(item)}
+                    onChange={() =>
+                      toggleArrayValue(
+                        "funcionalidades",
+                        item,
+                        form,
+                        setForm
+                      )
+                    }
+                  />
+                  <span>{item}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <label className="field">
+            <span>Outra funcionalidade</span>
+            <input
+              type="text"
+              value={form.outraFuncionalidade}
+              onChange={(e) =>
+                updateField("outraFuncionalidade", e.target.value)
+              }
+              placeholder="Alguma função que não apareceu na lista"
+            />
+          </label>
+
+          <label className="field">
+            <span>
+              Existe alguma função específica que você gostaria de ter?
+            </span>
+            <textarea
+              rows={6}
+              value={form.funcaoEspecifica}
+              onChange={(e) =>
+                updateField("funcaoEspecifica", e.target.value)
+              }
+              placeholder="Mesmo que você não saiba exatamente como ela deveria funcionar."
+            />
+          </label>
+        </section>
+
+        {/* 07 */}
+        <section className="form-section">
+          <div className="section-heading">
+            <span>07</span>
+            <div>
+              <p className="eyebrow">PRESENÇA DIGITAL</p>
+              <h2>Como sua empresa aparece hoje?</h2>
+            </div>
+          </div>
+
+          <div className="field">
+            <span>Sua empresa possui:</span>
+
+            <div className="choice-grid">
+              {presenca.map((item) => (
+                <label className="choice" key={item}>
+                  <input
+                    type="checkbox"
+                    checked={form.presencaDigital.includes(item)}
+                    onChange={() => {
+                      if (item === "Nenhum desses") {
+                        setForm((current) => ({
+                          ...current,
+                          presencaDigital: current.presencaDigital.includes(
+                            "Nenhum desses"
+                          )
+                            ? []
+                            : ["Nenhum desses"],
+                        }));
+                        return;
+                      }
+
+                      setForm((current) => ({
+                        ...current,
+                        presencaDigital: current.presencaDigital
+                          .filter((value) => value !== "Nenhum desses")
+                          .includes(item)
+                          ? current.presencaDigital.filter(
+                              (value) => value !== item
+                            )
+                          : [
+                              ...current.presencaDigital.filter(
+                                (value) => value !== "Nenhum desses"
+                              ),
+                              item,
+                            ],
+                      }));
+                    }}
+                  />
+                  <span>{item}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <label className="field">
+            <span>O que você gostaria de melhorar na presença digital?</span>
+            <textarea
+              rows={6}
+              value={form.melhoriaDigital}
+              onChange={(e) =>
+                updateField("melhoriaDigital", e.target.value)
+              }
+              placeholder="Conte o que você sente que poderia melhorar na presença da empresa na internet."
+            />
+          </label>
+        </section>
+
+        {/* 08 */}
+        <section className="form-section">
+          <div className="section-heading">
+            <span>08</span>
+            <div>
+              <p className="eyebrow">REFERÊNCIAS</p>
+              <h2>O que inspira você?</h2>
+              <p>
+                Referências ajudam a entender estilo, experiência e expectativas.
+              </p>
+            </div>
+          </div>
+
+          <label className="field">
+            <span>
+              Existe algum site, sistema ou aplicativo que você gosta e
+              gostaria de usar como referência?
+            </span>
+            <textarea
+              rows={5}
+              value={form.referencias}
+              onChange={(e) => updateField("referencias", e.target.value)}
+              placeholder="Cole aqui os links das referências."
+            />
+          </label>
+
+          <label className="field">
+            <span>O que você gosta nessa referência?</span>
+            <textarea
+              rows={6}
+              value={form.gostaReferencias}
+              onChange={(e) =>
+                updateField("gostaReferencias", e.target.value)
+              }
+              placeholder="Pode ser o visual, alguma função, facilidade de uso, organização..."
+            />
+          </label>
+        </section>
+
+        {/* 09 */}
+        <section className="form-section">
+          <div className="section-heading">
+            <span>09</span>
+            <div>
+              <p className="eyebrow">SOBRE A NECESSIDADE</p>
+              <h2>Por que este projeto importa?</h2>
+            </div>
+          </div>
+
+          <label className="field">
+            <span>
+              Por que você acredita que sua empresa seria uma boa candidata
+              para participar deste projeto? *
+            </span>
+            <textarea
+              required
+              rows={7}
+              value={form.boaCandidata}
+              onChange={(e) => updateField("boaCandidata", e.target.value)}
+              placeholder="Conte por que acredita que este projeto faria sentido para sua empresa."
+            />
+          </label>
+
+          <label className="field">
+            <span>Por que você decidiu procurar uma solução tecnológica agora? *</span>
+            <textarea
+              required
+              rows={7}
+              value={form.porQueAgora}
+              onChange={(e) => updateField("porQueAgora", e.target.value)}
+              placeholder="O que aconteceu ou mudou para você buscar essa solução neste momento?"
+            />
+          </label>
+
+          <label className="field">
+            <span>O que mudaria no seu negócio se esse projeto fosse desenvolvido? *</span>
+            <textarea
+              required
+              rows={7}
+              value={form.mudariaNegocio}
+              onChange={(e) => updateField("mudariaNegocio", e.target.value)}
+              placeholder="Imagine seu negócio depois da solução funcionando."
+            />
+          </label>
+        </section>
+
+        {/* 10 */}
+        <section className="form-section">
+          <div className="section-heading">
+            <span>10</span>
+            <div>
+              <p className="eyebrow">DISPONIBILIDADE</p>
+              <h2>Vamos construir juntos.</h2>
+              <p>
+                O desenvolvimento de um projeto real precisa de participação
+                e comunicação.
+              </p>
+            </div>
+          </div>
+
+          <div className="field">
+            <span>
+              Você teria disponibilidade para conversar durante o
+              desenvolvimento, testar funcionalidades e fornecer informações
+              necessárias? *
+            </span>
+
+            <div className="choice-grid">
+              {[
+                "Sim",
+                "Não",
+                "Depende da disponibilidade",
+              ].map((item) => (
+                <label className="choice" key={item}>
+                  <input
+                    type="radio"
+                    name="disponibilidade"
+                    value={item}
+                    required
+                    checked={form.disponibilidade === item}
+                    onChange={(e) =>
+                      updateField("disponibilidade", e.target.value)
+                    }
+                  />
+                  <span>{item}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <label className="field">
+            <span>Quem será a pessoa responsável por acompanhar o projeto? *</span>
+            <input
+              type="text"
+              required
+              value={form.responsavelProjeto}
+              onChange={(e) =>
+                updateField("responsavelProjeto", e.target.value)
+              }
+              placeholder="Nome e função dessa pessoa"
+            />
+          </label>
+        </section>
+
+        {/* 11 */}
+        <section className="form-section">
+          <div className="section-heading">
+            <span>11</span>
+            <div>
+              <p className="eyebrow">PORTFÓLIO / DIVULGAÇÃO</p>
+              <h2>Sobre a apresentação do projeto.</h2>
+              <p>
+                O projeto poderá fazer parte da experiência profissional da
+                desenvolvedora.
+              </p>
+            </div>
+          </div>
+
+          <div className="field">
+            <span>
+              Você autoriza que o projeto desenvolvido seja apresentado no
+              portfólio profissional da desenvolvedora? *
+            </span>
+
+            <div className="choice-grid">
+              {[
+                "Sim, autorizo",
+                "Não autorizo",
+                "Podemos conversar sobre isso",
+              ].map((item) => (
+                <label className="choice" key={item}>
+                  <input
+                    type="radio"
+                    name="portfolio"
+                    value={item}
+                    required
+                    checked={form.portfolio === item}
+                    onChange={(e) =>
+                      updateField("portfolio", e.target.value)
+                    }
+                  />
+                  <span>{item}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div className="field">
+            <span>
+              Autoriza a utilização de imagens do projeto / empresa para
+              divulgação profissional? *
+            </span>
+
+            <div className="choice-grid">
+              {[
+                "Sim",
+                "Não",
+                "Podemos conversar",
+              ].map((item) => (
+                <label className="choice" key={item}>
+                  <input
+                    type="radio"
+                    name="imagens"
+                    value={item}
+                    required
+                    checked={form.imagens === item}
+                    onChange={(e) =>
+                      updateField("imagens", e.target.value)
+                    }
+                  />
+                  <span>{item}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 12 */}
+        <section className="form-section form-section-final">
+          <div className="section-heading">
+            <span>12</span>
+            <div>
+              <p className="eyebrow">FINALIZAÇÃO</p>
+              <h2>Agora quero ouvir você.</h2>
+              <p>
+                Este é o espaço para contar algo que ainda não apareceu no
+                formulário.
+              </p>
+            </div>
+          </div>
+
+          <label className="field">
+            <span>
+              Conte qualquer outra informação que você considera importante e
+              que ainda não foi perguntada.
+            </span>
+            <textarea
+              rows={7}
+              value={form.informacoesAdicionais}
+              onChange={(e) =>
+                updateField("informacoesAdicionais", e.target.value)
+              }
+              placeholder="Alguma informação, contexto ou detalhe que você gostaria que eu soubesse."
+            />
+          </label>
+
+          <label className="field">
+            <span>Por que você quer participar deste projeto? *</span>
+            <textarea
+              required
+              rows={8}
+              value={form.porQueParticipar}
+              onChange={(e) =>
+                updateField("porQueParticipar", e.target.value)
+              }
+              placeholder="Conte, com suas palavras, por que essa oportunidade seria importante para você e para o seu negócio."
+            />
+          </label>
+
+          <div className="final-notice">
+            <strong>Antes de enviar</strong>
+            <span>
+              Ao clicar em “Enviar inscrição”, suas respostas serão
+              organizadas em uma mensagem e o WhatsApp será aberto para que
+              você envie a inscrição diretamente.
+            </span>
+          </div>
+
+          <div className="form-navigation">
             <button
               type="submit"
               className="btn btn-gold"
+              disabled={sending}
             >
-              Enviar candidatura →
+              {sending ? "PREPARANDO INSCRIÇÃO..." : "ENVIAR INSCRIÇÃO →"}
             </button>
-          )}
-        </div>
+          </div>
+        </section>
       </form>
+
+      <footer className="form-footer">
+        <span>AP</span>
+        <p>Projeto Agatha · Digital Solutions</p>
+      </footer>
     </main>
   );
 }
